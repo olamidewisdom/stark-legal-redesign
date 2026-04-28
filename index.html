@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stark Legal — Commercial Law Firm in Nigeria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --navy:       #0B1F3A;
+  --navy-mid:   #162E52;
+  --navy-light: #1E3D6E;
+  --gold:       #C8A96E;
+  --gold-light: #DFC08A;
+  --gold-pale:  #F3E8D2;
+  --off-white:  #F8F6F1;
+  --grey-light: #EEECe7;
+  --grey-mid:   #D8D5CC;
+  --grey-dark:  #8C8A84;
+  --charcoal:   #1A1A18;
+  --white:      #FFFFFF;
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-sans:'Tenor Sans',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+}
+
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--off-white);color:var(--charcoal);font-family:var(--font-body);font-weight:300;overflow-x:hidden;}
+
+.snap-container{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;}
+.section{height:100vh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;display:flex;flex-direction:column;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 4rem;height:72px;
+  background:rgba(11,31,58,0.97);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:0.5px solid rgba(200,169,110,0.2);
+}
+/* ── LOGO: white wordmark filter ── */
+.nav-logo img{
+  height:36px;
+  /* invert to white, then hue-rotate back to neutral — works on any coloured wordmark */
+  filter: brightness(0) invert(1);
+}
+.nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none;}
+.nav-links a{font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(248,246,241,0.65);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--navy)!important;background:var(--gold);padding:10px 22px;text-decoration:none;transition:background .25s!important;}
+.nav-cta:hover{background:var(--gold-light)!important;}
+
+.progress-bar{position:fixed;top:72px;left:0;height:2px;background:var(--gold);z-index:199;width:0%;transition:width .08s linear;}
+
+.dot-nav{position:fixed;right:2.25rem;top:50%;transform:translateY(-50%);z-index:199;display:flex;flex-direction:column;gap:10px;}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(200,169,110,0.3);transition:background .3s,transform .3s;cursor:pointer;border:none;padding:0;}
+.dot.active{background:var(--gold);transform:scale(1.7);}
+
+/* ── SHARED ── */
+.section-label{font-family:var(--font-sans);font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;}
+.section-label::before{content:'';display:block;width:30px;height:.5px;background:var(--gold);}
+.section-label-dark{color:var(--gold);}
+.section-label-dark::before{background:var(--gold);}
+.section-title{font-family:var(--font-display);font-size:clamp(2rem,3vw,2.9rem);font-weight:300;line-height:1.15;letter-spacing:-.01em;margin-top:.4rem;}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;}
+
+.btn-gold{font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--navy);background:var(--gold);padding:15px 36px;text-decoration:none;display:inline-block;transition:background .25s;}
+.btn-gold:hover{background:var(--gold-light);}
+.btn-gold-sm{font-family:var(--font-sans);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--navy);background:var(--gold);padding:10px 22px;text-decoration:none;display:inline-block;transition:background .25s;}
+.btn-gold-sm:hover{background:var(--gold-light);}
+.btn-navy{font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--off-white);background:var(--navy);padding:15px 36px;text-decoration:none;display:inline-block;transition:background .25s;}
+.btn-navy:hover{background:var(--navy-light);}
+.btn-outline-gold{font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:0.5px solid var(--gold);padding:13px 32px;text-decoration:none;display:inline-block;transition:all .25s;}
+.btn-outline-gold:hover{background:var(--gold);color:var(--navy);}
+.btn-ghost-light{font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(248,246,241,.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .2s;}
+.btn-ghost-light:hover{color:var(--off-white);}
+.btn-ghost-light::after{content:'→';font-size:14px;}
+.btn-ghost-dark{font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(26,26,24,.5);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .2s;}
+.btn-ghost-dark:hover{color:var(--charcoal);}
+.btn-ghost-dark::after{content:'→';font-size:14px;}
+
+/* ════════════════════════════════
+   1. HERO
+════════════════════════════════ */
+#hero{justify-content:flex-end;padding-bottom:9vh;}
+.hero-bg{position:absolute;inset:0;background:var(--navy);}
+.hero-bg-img{position:absolute;inset:0;background-image:url('https://starklegalng.com/videos/videos.png');background-size:cover;background-position:center;opacity:.14;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,169,110,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(200,169,110,.06) 1px,transparent 1px);background-size:80px 80px;}
+.hero-accent{position:absolute;top:0;right:18%;width:.5px;height:100%;background:linear-gradient(to bottom,transparent,rgba(200,169,110,.25) 40%,transparent);transform:rotate(8deg);transform-origin:top center;}
+.hero-content{position:relative;z-index:2;padding:0 5rem;max-width:1000px;}
+.hero-overline{font-family:var(--font-sans);font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:1.75rem;display:flex;align-items:center;gap:1rem;animation:fadeUp .8s ease .1s both;}
+.hero-overline::before{content:'';display:block;width:40px;height:.5px;background:var(--gold);}
+.hero-headline-wrap{position:relative;overflow:hidden;margin-bottom:2.25rem;animation:fadeUp .8s ease .25s both;}
+.hero-headline{font-family:var(--font-display);font-size:clamp(3.6rem,7vw,6.8rem);font-weight:300;line-height:1.0;color:var(--off-white);letter-spacing:-.01em;}
+.hero-headline em{font-style:italic;color:var(--gold-light);}
+.slide-out-up{animation:slideOutUp .6s cubic-bezier(.4,0,.2,1) forwards;}
+.slide-in-up{animation:slideInUp .6s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes slideOutUp{from{opacity:1;transform:translateY(0);}to{opacity:0;transform:translateY(-32px);}}
+@keyframes slideInUp{from{opacity:0;transform:translateY(36px);}to{opacity:1;transform:translateY(0);}}
+.hero-sub{font-size:.975rem;line-height:1.85;color:rgba(248,246,241,.5);max-width:480px;margin-bottom:3rem;animation:fadeUp .8s ease .4s both;}
+.hero-actions{display:flex;align-items:center;gap:2.5rem;animation:fadeUp .8s ease .55s both;}
+.hero-scroll-indicator{position:absolute;bottom:2.5rem;right:4rem;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(248,246,241,.22);font-family:var(--font-sans);font-size:9px;letter-spacing:.28em;text-transform:uppercase;animation:fadeUp 1s ease .8s both;}
+.scroll-line{width:.5px;height:52px;background:rgba(248,246,241,.12);position:relative;overflow:hidden;}
+.scroll-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--gold);animation:scrollDown 2.2s ease-in-out infinite;}
+@keyframes scrollDown{0%{top:-100%;}100%{top:100%;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
+
+/* ════════════════════════════════
+   2. STATS SECTION (dedicated full section)
+════════════════════════════════ */
+#stats{background:var(--off-white);}
+.stats-section-inner{
+  display:flex;flex-direction:column;justify-content:center;
+  height:100%;padding:0 5rem;max-width:1200px;margin:0 auto;width:100%;
+}
+.stats-top{margin-bottom:4rem;}
+.stats-top .section-label{color:var(--gold);}
+.stats-top .section-label::before{background:var(--gold);}
+.stats-headline{font-family:var(--font-display);font-size:clamp(2.4rem,3.5vw,3.6rem);font-weight:300;line-height:1.15;letter-spacing:-.01em;color:var(--navy);max-width:680px;}
+.stats-headline em{font-style:italic;color:var(--gold);}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:.5px solid var(--grey-mid);}
+.stat-block{
+  padding:2.75rem 2.5rem;
+  border-right:.5px solid var(--grey-mid);
+  position:relative;
+  transition:background .3s;
+}
+.stat-block:last-child{border-right:none;}
+.stat-block:hover{background:var(--grey-light);}
+.stat-block::before{
+  content:'';position:absolute;top:0;left:0;right:0;
+  height:2px;background:var(--gold);
+  transform:scaleX(0);transition:transform .4s ease;transform-origin:left;
+}
+.stat-block:hover::before{transform:scaleX(1);}
+.stat-num{
+  font-family:var(--font-display);
+  font-size:clamp(3rem,4.5vw,5rem);
+  font-weight:300;line-height:1;
+  color:var(--navy);margin-bottom:.75rem;
+}
+.stat-num span{font-style:italic;color:var(--gold);font-size:.7em;}
+.stat-label{font-family:var(--font-sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-dark);margin-bottom:.75rem;}
+.stat-desc{font-size:.82rem;line-height:1.75;color:#6A6866;max-width:200px;}
+.stats-cta-row{margin-top:3rem;display:flex;gap:1.25rem;align-items:center;}
+
+/* ════════════════════════════════
+   3. ABOUT / MOTTO
+════════════════════════════════ */
+#motto{background:var(--off-white);}
+.motto-split{display:grid;grid-template-columns:1fr 1fr;height:100%;}
+.motto-img-col{position:relative;overflow:hidden;}
+.motto-img-col img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.9);}
+.motto-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(11,31,58,.55) 0%,transparent 60%);}
+.motto-img-badge{position:absolute;bottom:2.5rem;left:2.5rem;background:var(--gold);padding:1.25rem 1.75rem;}
+.motto-img-badge-num{font-family:var(--font-display);font-size:2.6rem;font-weight:300;color:var(--navy);line-height:1;}
+.motto-img-badge-txt{font-family:var(--font-sans);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--navy);margin-top:4px;}
+.motto-text-col{display:flex;flex-direction:column;justify-content:center;padding:5rem 5rem 5rem 4.5rem;}
+.motto-quote{font-family:var(--font-display);font-size:clamp(2.2rem,3.2vw,3.2rem);font-weight:300;line-height:1.2;color:var(--navy);letter-spacing:-.01em;margin-bottom:2rem;}
+.motto-quote em{font-style:italic;color:var(--gold);}
+.motto-body{font-size:.9rem;line-height:1.95;color:#525050;margin-bottom:1.25rem;}
+.motto-actions{display:flex;gap:1.25rem;margin-top:2rem;flex-wrap:wrap;}
+
+/* ════════════════════════════════
+   4. EXPERTISE
+════════════════════════════════ */
+#expertise{background:var(--navy);}
+.expertise-wrap{display:flex;flex-direction:column;justify-content:center;height:100%;padding:0 5rem;}
+.expertise-inner{max-width:1200px;width:100%;margin:0 auto;}
+.expertise-grid{display:grid;grid-template-columns:repeat(5,1fr);border:.5px solid rgba(200,169,110,.2);}
+.expertise-card{padding:2.75rem 2rem 2.5rem;border-right:.5px solid rgba(200,169,110,.2);position:relative;cursor:pointer;transition:background .3s;text-decoration:none;color:inherit;display:block;overflow:hidden;}
+.expertise-card:last-child{border-right:none;}
+.expertise-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .35s cubic-bezier(.4,0,.2,1);transform-origin:left;}
+.expertise-card:hover::after{transform:scaleX(1);}
+.expertise-card:hover{background:rgba(200,169,110,.07);}
+.expertise-num{font-family:var(--font-display);font-size:2.8rem;font-weight:300;color:rgba(200,169,110,.25);display:block;margin-bottom:2.5rem;line-height:1;transition:color .3s;}
+.expertise-card:hover .expertise-num{color:var(--gold-light);}
+.expertise-name{font-family:var(--font-sans);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(248,246,241,.8);line-height:1.6;margin-bottom:1.25rem;}
+.expertise-arrow{font-size:14px;color:var(--gold);opacity:0;transition:opacity .2s,transform .2s;display:block;transform:translateX(-6px);}
+.expertise-card:hover .expertise-arrow{opacity:1;transform:translateX(0);}
+
+/* ════════════════════════════════
+   5. AWARDS
+════════════════════════════════ */
+#awards{background:var(--navy);}
+.awards-wrap{display:flex;flex-direction:column;justify-content:center;height:100%;padding:0 5rem;}
+.awards-inner{max-width:1200px;width:100%;margin:0 auto;}
+.awards-header-line{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;}
+.award-tile{
+  background:rgba(255,255,255,.04);border:.5px solid rgba(200,169,110,.18);
+  padding:2rem 2rem 1.75rem;display:flex;flex-direction:column;gap:1rem;
+  transition:background .35s,border-color .35s,transform .3s;cursor:default;
+  opacity:0;transform:translateY(30px);
+}
+.award-tile.revealed{animation:awardReveal .65s cubic-bezier(.22,1,.36,1) forwards;}
+@keyframes awardReveal{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);}}
+.award-tile:hover{background:rgba(200,169,110,.1);border-color:rgba(200,169,110,.45);transform:translateY(-3px);}
+.award-icon{width:36px;height:36px;flex-shrink:0;}
+.award-top{display:flex;align-items:flex-start;justify-content:space-between;}
+.award-year{font-family:var(--font-display);font-size:2.6rem;font-weight:300;color:rgba(200,169,110,.35);line-height:1;transition:color .3s;}
+.award-tile:hover .award-year{color:var(--gold);}
+.award-title{font-size:.85rem;line-height:1.6;color:rgba(248,246,241,.8);}
+.award-org{font-family:var(--font-sans);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:.25rem;}
+.awards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:rgba(200,169,110,.1);}
+
+/* ════════════════════════════════
+   6. CONSULTATION
+════════════════════════════════ */
+#consultation{background:var(--grey-light);}
+.consult-split{display:grid;grid-template-columns:1.1fr 1fr;height:100%;}
+.consult-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 5rem;}
+.consult-right{position:relative;overflow:hidden;}
+.consult-right img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.75) saturate(.8);}
+.consult-right-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(238,236,231,.3),transparent);}
+.consult-milestone-chip{position:absolute;bottom:3rem;left:-2rem;background:var(--navy);padding:2rem 2.5rem;max-width:340px;border-left:3px solid var(--gold);}
+.milestone-num{font-family:var(--font-display);font-size:3rem;font-weight:300;color:var(--gold);line-height:1;}
+.milestone-label{font-family:var(--font-sans);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(248,246,241,.5);margin-top:4px;}
+.milestone-body{font-size:.82rem;line-height:1.75;color:rgba(248,246,241,.55);margin-top:.75rem;}
+.consult-steps{margin:2.5rem 0;}
+.consult-step{display:grid;grid-template-columns:52px 1fr;gap:1.5rem;align-items:center;padding:1.5rem 0;border-bottom:.5px solid var(--grey-mid);transition:padding-left .25s;}
+.consult-step:first-child{border-top:.5px solid var(--grey-mid);}
+.consult-step:hover{padding-left:8px;}
+.step-num{font-family:var(--font-display);font-size:1.9rem;font-weight:300;color:var(--grey-mid);transition:color .25s;}
+.consult-step:hover .step-num{color:var(--gold);}
+.step-title{font-family:var(--font-sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--charcoal);}
+.consult-actions{display:flex;gap:1.25rem;flex-wrap:wrap;}
+
+/* ════════════════════════════════
+   7. NEWS
+════════════════════════════════ */
+#news{background:var(--off-white);}
+.news-wrap{display:flex;flex-direction:column;justify-content:center;height:100%;padding:0 5rem;}
+.news-inner{max-width:1200px;width:100%;margin:0 auto;}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:2.5rem;background:var(--grey-mid);}
+.news-card{background:var(--off-white);padding:0 0 1.75rem 0;cursor:pointer;transition:background .3s;text-decoration:none;color:inherit;display:block;overflow:hidden;}
+.news-card:hover{background:var(--grey-light);}
+.news-img-wrap{overflow:hidden;position:relative;}
+.news-img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;transition:transform .5s;}
+.news-card:hover .news-img{transform:scale(1.04);}
+/* gold shimmer overlay on hover instead of grayscale */
+.news-img-wrap::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(200,169,110,.22),transparent 60%);
+  opacity:0;transition:opacity .35s;
+}
+.news-card:hover .news-img-wrap::after{opacity:1;}
+.news-card-body{padding:1.25rem 1.5rem 0;}
+.news-cat{font-family:var(--font-sans);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.65rem;}
+.news-title{font-family:var(--font-display);font-size:1.12rem;font-weight:400;line-height:1.45;color:var(--navy);margin-bottom:.75rem;}
+.news-date{font-family:var(--font-sans);font-size:9px;letter-spacing:.1em;color:var(--grey-dark);margin-bottom:1rem;}
+/* read article btn per card */
+.news-read{font-family:var(--font-sans);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:6px;transition:gap .2s,color .2s;}
+.news-read::after{content:'→';font-size:12px;}
+.news-card:hover .news-read{gap:10px;color:var(--navy);}
+.news-cta-row{display:flex;align-items:center;justify-content:space-between;margin-top:2rem;}
+
+/* ════════════════════════════════
+   8. GALLERY  — redesigned layout + prev/next
+════════════════════════════════ */
+#gallery{background:var(--navy);}
+.gallery-wrap{display:flex;flex-direction:column;justify-content:center;height:100%;padding:0 5rem;}
+.gallery-inner{max-width:1200px;width:100%;margin:0 auto;}
+
+.gallery-layout{
+  display:grid;
+  grid-template-columns:1.6fr 1fr;
+  grid-template-rows:1fr 1fr;
+  gap:3px;
+  height:420px;
+  margin-top:2rem;
+  background:rgba(200,169,110,.12);
+}
+/* featured big image spans both rows on left */
+.gallery-featured{
+  grid-row:1/3;
+  position:relative;overflow:hidden;cursor:pointer;
+}
+.gallery-featured img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;}
+.gallery-featured:hover img{transform:scale(1.03);}
+
+.gallery-small{position:relative;overflow:hidden;cursor:pointer;}
+.gallery-small img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;}
+.gallery-small:hover img{transform:scale(1.05);}
+
+/* gold border reveal on hover — no grayscale */
+.gallery-featured::after,.gallery-small::after{
+  content:'';position:absolute;inset:0;
+  border:2px solid transparent;
+  transition:border-color .3s;
+  pointer-events:none;
+  z-index:2;
+}
+.gallery-featured:hover::after,.gallery-small:hover::after{border-color:var(--gold);}
+
+/* nav arrows */
+.gallery-controls{
+  display:flex;align-items:center;gap:1rem;
+}
+.gallery-arrow{
+  width:42px;height:42px;border:.5px solid rgba(200,169,110,.4);
+  background:transparent;color:var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background .2s,border-color .2s;font-size:16px;
+}
+.gallery-arrow:hover{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+.gallery-counter{font-family:var(--font-sans);font-size:10px;letter-spacing:.2em;color:rgba(248,246,241,.4);min-width:56px;text-align:center;}
+
+.gallery-header-label{color:var(--gold);}
+.gallery-header-label::before{background:var(--gold);}
+.gallery-section-title{color:var(--off-white);}
+.gallery-sub{font-size:.875rem;line-height:1.8;color:rgba(248,246,241,.5);max-width:480px;margin-top:.5rem;}
+
+/* ════════════════════════════════
+   9. FAQ
+════════════════════════════════ */
+#faq{background:var(--grey-light);}
+.faq-split{display:grid;grid-template-columns:1fr 1fr;height:100%;}
+.faq-img-col{position:relative;overflow:hidden;}
+.faq-img-col img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.6) saturate(.7);}
+.faq-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(11,31,58,.7) 0%,transparent 60%);}
+.faq-img-text{position:absolute;bottom:3rem;left:3rem;right:3rem;}
+.faq-img-text h3{font-family:var(--font-display);font-size:1.9rem;font-weight:300;color:var(--off-white);line-height:1.3;margin-bottom:1.25rem;}
+.faq-right{display:flex;flex-direction:column;justify-content:center;padding:5rem 5rem 5rem 4.5rem;}
+.faq-list{margin-top:2rem;}
+.faq-item{border-bottom:.5px solid var(--grey-mid);overflow:hidden;}
+.faq-q{width:100%;background:none;border:none;text-align:left;padding:1.4rem 0;font-family:var(--font-body);font-size:.9rem;color:var(--charcoal);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+.faq-toggle{width:20px;height:20px;border:.5px solid var(--grey-mid);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;color:var(--gold);transition:transform .3s;background:none;}
+.faq-item.open .faq-toggle{transform:rotate(45deg);}
+.faq-a{font-size:.875rem;line-height:1.85;color:#5A5A58;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;}
+.faq-item.open .faq-a{max-height:160px;padding-bottom:1.4rem;}
+.faq-cta{margin-top:2.5rem;display:flex;gap:1rem;}
+
+/* ════════════════════════════════
+   10. CONTACT / FOOTER
+════════════════════════════════ */
+#contact{background:var(--navy);justify-content:space-between;}
+.contact-top{flex:1;display:flex;align-items:center;padding:0 5rem;}
+.contact-inner{max-width:1200px;width:100%;display:grid;grid-template-columns:1.3fr .5px 1fr;gap:5.5rem;align-items:center;}
+.contact-divider{background:rgba(200,169,110,.15);align-self:stretch;}
+.contact-headline{font-family:var(--font-display);font-size:clamp(2.8rem,4.5vw,4.5rem);font-weight:300;line-height:1.1;color:var(--off-white);margin-bottom:2.5rem;letter-spacing:-.01em;}
+.contact-headline em{font-style:italic;color:var(--gold-light);}
+.contact-actions{display:flex;gap:1.25rem;flex-wrap:wrap;}
+.contact-info{display:flex;flex-direction:column;gap:1.75rem;}
+.contact-label{font-family:var(--font-sans);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+.contact-value{font-size:.9rem;color:rgba(248,246,241,.55);line-height:1.85;}
+.contact-value a{color:rgba(248,246,241,.55);text-decoration:none;transition:color .2s;}
+.contact-value a:hover{color:var(--gold-light);}
+.footer-bottom{padding:1.5rem 5rem;border-top:.5px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;}
+.footer-copy{font-family:var(--font-sans);font-size:10px;letter-spacing:.1em;color:rgba(248,246,241,.25);}
+.footer-links{display:flex;gap:2.5rem;list-style:none;}
+.footer-links a{font-family:var(--font-sans);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(248,246,241,.3);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="https://starklegalng.com/wp-content/uploads/2025/05/starklegal-logo-120.png" alt="Stark Legal">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">The Firm</a></li>
+    <li><a href="#">Our Expertise</a></li>
+    <li><a href="#">Our People</a></li>
+    <li><a href="#">Resources</a></li>
+    <li><a href="https://starklegalng.com/contact/" class="nav-cta">Book Consultation</a></li>
+  </ul>
+</nav>
+
+<!-- DOT NAV -->
+<div class="dot-nav" id="dotNav">
+  <button class="dot active" data-section="0" title="Home"></button>
+  <button class="dot" data-section="1" title="Credentials"></button>
+  <button class="dot" data-section="2" title="About"></button>
+  <button class="dot" data-section="3" title="Expertise"></button>
+  <button class="dot" data-section="4" title="Awards"></button>
+  <button class="dot" data-section="5" title="Consultation"></button>
+  <button class="dot" data-section="6" title="News"></button>
+  <button class="dot" data-section="7" title="Gallery"></button>
+  <button class="dot" data-section="8" title="FAQ"></button>
+  <button class="dot" data-section="9" title="Contact"></button>
+</div>
+
+<div class="snap-container" id="snapContainer">
+
+<!-- ════ 1. HERO ════ -->
+<section class="section" id="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-img"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-accent"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-overline">Commercial Law Firm in Nigeria</div>
+    <div class="hero-headline-wrap">
+      <h1 class="hero-headline" id="heroHeadline">We Are A<br>21st Century<br><em>Full Service</em><br>Law Firm.</h1>
+    </div>
+    <p class="hero-sub" id="heroSub">Providing excellent legal support to local and international corporate bodies, government agencies, NGOs, and individuals.</p>
+    <div class="hero-actions">
+      <a href="https://starklegalng.com/contact/" class="btn-gold">Book a Consultation</a>
+      <a href="https://starklegalng.com/the-firm/" class="btn-ghost-light">Explore the Firm</a>
+    </div>
+  </div>
+  <div class="hero-scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ════ 2. STATS (dedicated section) ════ -->
+<section class="section" id="stats">
+  <div style="display:flex;justify-content:center;align-items:center;height:100%;">
+  <div class="stats-section-inner">
+    <div class="stats-top">
+      <div class="section-label">Our Credentials</div>
+      <h2 class="stats-headline">A Decade of <em>Proven</em> Impact,<br>Built on Results That Speak.</h2>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-block">
+        <div class="stat-num">11<span>+</span></div>
+        <div class="stat-label">Years of Excellence</div>
+        <div class="stat-desc">Over a decade of delivering strategic legal solutions to clients across Nigeria and beyond.</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Industry Awards</div>
+        <div class="stat-desc">Recognised by the ESQ Nigerian Legal Awards and Global Law Experts for outstanding legal service.</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Practice Areas</div>
+        <div class="stat-desc">Full-service coverage across Energy, Transport, Financial Services, Corporate Law, and Dispute Resolution.</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Office Locations</div>
+        <div class="stat-desc">Strategically present in Lagos, Abuja, and Port-Harcourt to serve clients wherever business demands.</div>
+      </div>
+    </div>
+    <div class="stats-cta-row">
+      <a href="https://starklegalng.com/the-firm/" class="btn-navy">Discover the Firm</a>
+      <a href="https://starklegalng.com/contact/" class="btn-ghost-dark">Book a Free Consultation</a>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ════ 3. ABOUT / MOTTO ════ -->
+<section class="section" id="motto">
+  <div class="motto-split">
+    <div class="motto-img-col">
+      <img src="https://starklegalng.com/wp-content/uploads/2025/06/who-we-are-510.png" alt="Stark Legal Team">
+      <div class="motto-img-overlay"></div>
+      <div class="motto-img-badge">
+        <div class="motto-img-badge-num">11</div>
+        <div class="motto-img-badge-txt">Years of Legal<br>Excellence</div>
+      </div>
+    </div>
+    <div class="motto-text-col">
+      <div class="section-label">Our Motto</div>
+      <h2 class="motto-quote">Pursue <em>Excellence</em><br>and Success<br>will Follow.</h2>
+      <p class="motto-body">Our firm embodies an unwavering commitment to excellence, a distinctive and efficient approach to legal practice, and an innovative mindset. We offer unparalleled experience, innovative solutions, technical proficiency, clear and precise advice, and an unwavering dedication to delivering value.</p>
+      <p class="motto-body">What sets us apart is not just the depth of our knowledge, but our ability to translate it into strategic, practical outcomes — driving real value for clients who demand reliability, precision, and forward-thinking legal support.</p>
+      <div class="motto-actions">
+        <a href="https://starklegalng.com/the-firm/" class="btn-navy">About the Firm</a>
+        <a href="https://starklegalng.com/people/" class="btn-ghost-dark">Meet Our People</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 4. EXPERTISE ════ -->
+<section class="section" id="expertise">
+  <div class="expertise-wrap">
+    <div class="expertise-inner">
+      <div class="section-header">
+        <div>
+          <div class="section-label">Our Expertise</div>
+          <h2 class="section-title" style="color:var(--off-white);">Practice Areas</h2>
+        </div>
+        <a href="https://starklegalng.com/expertise/" class="btn-outline-gold">View All Practice Areas</a>
+      </div>
+      <div class="expertise-grid">
+        <a href="https://starklegalng.com/expertise/energy-3/" class="expertise-card">
+          <span class="expertise-num">01</span><span class="expertise-name">Energy</span><span class="expertise-arrow">→</span>
+        </a>
+        <a href="https://starklegalng.com/expertise/transport/" class="expertise-card">
+          <span class="expertise-num">02</span><span class="expertise-name">Transport</span><span class="expertise-arrow">→</span>
+        </a>
+        <a href="https://starklegalng.com/expertise/financial-services/" class="expertise-card">
+          <span class="expertise-num">03</span><span class="expertise-name">Financial Services</span><span class="expertise-arrow">→</span>
+        </a>
+        <a href="https://starklegalng.com/expertise/corporate-commercial-law/" class="expertise-card">
+          <span class="expertise-num">04</span><span class="expertise-name">Corporate &amp; Commercial Law</span><span class="expertise-arrow">→</span>
+        </a>
+        <a href="https://starklegalng.com/expertise/dispute-resolution-litigation/" class="expertise-card">
+          <span class="expertise-num">05</span><span class="expertise-name">Dispute Resolution</span><span class="expertise-arrow">→</span>
+        </a>
+      </div>
+      <div style="margin-top:2rem;display:flex;gap:1.25rem;">
+        <a href="https://starklegalng.com/contact/" class="btn-gold">Get Legal Advice</a>
+        <a href="https://starklegalng.com/people/" class="btn-ghost-light">Meet Our Lawyers</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 5. AWARDS ════ -->
+<section class="section" id="awards">
+  <div class="awards-wrap">
+    <div class="awards-inner">
+      <div class="awards-header-line">
+        <div>
+          <div class="section-label">Recognition</div>
+          <h2 class="section-title" style="color:var(--off-white);">Recognised for Excellence,<br>Trusted Advocacy &amp; Proven Expertise</h2>
+        </div>
+        <a href="https://starklegalng.com/the-firm/" class="btn-outline-gold">Our Full Story</a>
+      </div>
+      <div class="awards-grid" id="awardsGrid">
+
+        <div class="award-tile" data-delay="0">
+          <div class="award-top">
+            <div class="award-year">2019</div>
+            <svg class="award-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="17.25" stroke="rgba(200,169,110,0.35)" stroke-width=".5"/><path d="M18 8l2.5 5.1 5.6.8-4.05 3.95.96 5.6L18 20.77l-5.01 2.68.96-5.6L9.9 13.9l5.6-.8L18 8z" stroke="#C8A96E" stroke-width="1" stroke-linejoin="round" fill="none"/></svg>
+          </div>
+          <div><div class="award-title">Managing Partner of the Year (Small Practice)</div><div class="award-org">ESQ Nigerian Legal Awards</div></div>
+        </div>
+
+        <div class="award-tile" data-delay="120">
+          <div class="award-top">
+            <div class="award-year">2019</div>
+            <svg class="award-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="17.25" stroke="rgba(200,169,110,0.35)" stroke-width=".5"/><rect x="11" y="9" width="14" height="11" rx="1" stroke="#C8A96E" stroke-width="1" fill="none"/><path d="M14 20v6M22 20v6M11 26h14" stroke="#C8A96E" stroke-width="1" stroke-linecap="round"/></svg>
+          </div>
+          <div><div class="award-title">Law Firm of the Year (Small Practice)</div><div class="award-org">ESQ Nigerian Legal Awards</div></div>
+        </div>
+
+        <div class="award-tile" data-delay="240">
+          <div class="award-top">
+            <div class="award-year">2021</div>
+            <svg class="award-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="17.25" stroke="rgba(200,169,110,0.35)" stroke-width=".5"/><rect x="11" y="9" width="14" height="11" rx="1" stroke="#C8A96E" stroke-width="1" fill="none"/><path d="M14 20v6M22 20v6M11 26h14" stroke="#C8A96E" stroke-width="1" stroke-linecap="round"/></svg>
+          </div>
+          <div><div class="award-title">Law Firm of the Year (Small Practice)</div><div class="award-org">ESQ Nigerian Legal Awards</div></div>
+        </div>
+
+        <div class="award-tile" data-delay="360">
+          <div class="award-top">
+            <div class="award-year">2022</div>
+            <svg class="award-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="17.25" stroke="rgba(200,169,110,0.35)" stroke-width=".5"/><rect x="11" y="9" width="14" height="11" rx="1" stroke="#C8A96E" stroke-width="1" fill="none"/><path d="M14 20v6M22 20v6M11 26h14" stroke="#C8A96E" stroke-width="1" stroke-linecap="round"/></svg>
+          </div>
+          <div><div class="award-title">Law Firm of the Year (Small Practice)</div><div class="award-org">ESQ Nigerian Legal Awards</div></div>
+        </div>
+
+        <div class="award-tile" data-delay="480">
+          <div class="award-top">
+            <div class="award-year">2022</div>
+            <svg class="award-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="17.25" stroke="rgba(200,169,110,0.35)" stroke-width=".5"/><path d="M18 9c-3 0-5 2-5 5 0 2 1 3.5 2.5 4.5V21h5v-2.5C22 17.5 23 16 23 14c0-3-2-5-5-5z" stroke="#C8A96E" stroke-width="1" fill="none"/><path d="M15.5 21h5M16 24h4" stroke="#C8A96E" stroke-width="1" stroke-linecap="round"/></svg>
+          </div>
+          <div><div class="award-title">Aviation Team of the Year</div><div class="award-org">ESQ Nigerian Legal Awards</div></div>
+        </div>
+
+        <div class="award-tile" data-delay="600">
+          <div class="award-top">
+            <div class="award-year">2024</div>
+            <svg class="award-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="17.25" stroke="rgba(200,169,110,0.35)" stroke-width=".5"/><path d="M18 10l2 3 4 .5-3 2.8.7 4-3.7-2-3.7 2 .7-4-3-2.8 4-.5 2-3z" stroke="#C8A96E" stroke-width="1" fill="none" stroke-linejoin="round"/><path d="M12 22l-2 4M24 22l2 4" stroke="#C8A96E" stroke-width="1" stroke-linecap="round"/></svg>
+          </div>
+          <div><div class="award-title">Aviation Team of the Year</div><div class="award-org">Global Law Experts Award</div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 6. CONSULTATION ════ -->
+<section class="section" id="consultation">
+  <div class="consult-split">
+    <div class="consult-left">
+      <div class="section-label">Schedule a Consultation</div>
+      <h2 class="section-title" style="color:var(--navy);">How to Get<br>Started with Us</h2>
+      <p style="font-size:.9rem;line-height:1.9;color:#525050;margin-top:.75rem;max-width:400px;">Our team of seasoned attorneys is dedicated to carefully listening to your concerns, ensuring a deep understanding of your unique situation.</p>
+      <div class="consult-steps">
+        <div class="consult-step"><span class="step-num">01</span><span class="step-title">Schedule a Time</span></div>
+        <div class="consult-step"><span class="step-num">02</span><span class="step-title">Book a Consultation</span></div>
+        <div class="consult-step"><span class="step-num">03</span><span class="step-title">Speak to a Lawyer</span></div>
+      </div>
+      <div class="consult-actions">
+        <a href="https://starklegalng.com/contact/" class="btn-gold">Book Now</a>
+        <a href="tel:+2349096851318" class="btn-ghost-dark">Call Us Directly</a>
+      </div>
+    </div>
+    <div class="consult-right">
+      <img src="https://starklegalng.com/wp-content/uploads/2026/03/NSIB-199-1024x683.jpg" alt="Stark Legal in session">
+      <div class="consult-right-overlay"></div>
+      <div class="consult-milestone-chip">
+        <div class="milestone-num">11</div>
+        <div class="milestone-label">Years of Legal Excellence</div>
+        <div class="milestone-body">Transforming complex legal challenges into clear, winning solutions since 2014. Built on trust, innovation, and unwavering commitment.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 7. NEWS ════ -->
+<section class="section" id="news">
+  <div class="news-wrap">
+    <div class="news-inner">
+      <div class="section-header">
+        <div>
+          <div class="section-label">Knowledge</div>
+          <h2 class="section-title" style="color:var(--navy);">News &amp; Updates</h2>
+        </div>
+        <a href="https://starklegalng.com/publications/" class="btn-navy">All Publications</a>
+      </div>
+      <div class="news-grid">
+
+        <a href="https://starklegalng.com/disputing-tax-assessments-under-the-new-tax-laws-things-to-know/" class="news-card">
+          <div class="news-img-wrap"><img class="news-img" src="https://starklegalng.com/wp-content/uploads/2026/04/Disputing-Tax-Assessments-under-the-New-Tax-Laws-425x325.jpg" alt="Tax Article"></div>
+          <div class="news-card-body">
+            <div class="news-cat">Corporate &amp; Commercial Law</div>
+            <div class="news-title">Disputing Tax Assessments under the New Tax Laws: Things to Know</div>
+            <div class="news-date">April 22, 2026</div>
+            <span class="news-read">Read Article</span>
+          </div>
+        </a>
+
+        <a href="https://starklegalng.com/the-quiet-shift-in-nigerias-tax-landscape-businesses-should-not-ignore/" class="news-card">
+          <div class="news-img-wrap"><img class="news-img" src="https://starklegalng.com/wp-content/uploads/2026/04/TAX-ARTICLE-425x325.jpg" alt="Tax Article 2"></div>
+          <div class="news-card-body">
+            <div class="news-cat">Corporate &amp; Commercial Law</div>
+            <div class="news-title">The Quiet Shift In Nigeria's Tax Landscape Businesses Should Not Ignore</div>
+            <div class="news-date">April 14, 2026</div>
+            <span class="news-read">Read Article</span>
+          </div>
+        </a>
+
+        <a href="https://starklegalng.com/non-disclosure-of-conflict-of-interest-by-directors-how-this-affects-you/" class="news-card">
+          <div class="news-img-wrap"><img class="news-img" src="https://starklegalng.com/wp-content/uploads/2026/04/article1-425x325.jpg" alt="Directors Article"></div>
+          <div class="news-card-body">
+            <div class="news-cat">Corporate &amp; Commercial Law</div>
+            <div class="news-title">Non-Disclosure of Conflict of Interest by Directors: How This Affects You</div>
+            <div class="news-date">April 7, 2026</div>
+            <span class="news-read">Read Article</span>
+          </div>
+        </a>
+
+      </div>
+      <div class="news-cta-row">
+        <span style="font-family:var(--font-sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-dark);">Stay informed — subscribe to our newsletter</span>
+        <a href="https://starklegalng.com/newsletters/" class="btn-gold" style="padding:12px 28px;">Subscribe</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 8. GALLERY ════ -->
+<section class="section" id="gallery">
+  <div class="gallery-wrap">
+    <div class="gallery-inner">
+      <div class="section-header" style="margin-bottom:0;">
+        <div>
+          <div class="section-label gallery-header-label">Gallery</div>
+          <h2 class="section-title gallery-section-title">NSIB Aviation Stakeholders<br>Engagement Workshop</h2>
+          <p class="gallery-sub">Our team was privileged to execute this project for the Nigerian Safety Investigation Bureau.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:1.25rem;">
+          <a href="https://starklegalng.com/gallery/" class="btn-outline-gold">View Full Gallery</a>
+          <div class="gallery-controls">
+            <button class="gallery-arrow" id="galleryPrev">&#8592;</button>
+            <span class="gallery-counter" id="galleryCounter">1 / 4</span>
+            <button class="gallery-arrow" id="galleryNext">&#8594;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gallery layout: big left + 2 right -->
+      <div class="gallery-layout" id="galleryLayout">
+        <div class="gallery-featured" id="galleryFeat">
+          <img id="galleryFeatImg" src="https://starklegalng.com/wp-content/uploads/2026/03/NSIB-326-1024x681.jpg" alt="NSIB featured">
+        </div>
+        <div class="gallery-small" id="gallerySmall1">
+          <img id="gallerySmall1Img" src="https://starklegalng.com/wp-content/uploads/2026/03/NSIB-199-1024x683.jpg" alt="NSIB 2">
+        </div>
+        <div class="gallery-small" id="gallerySmall2">
+          <img id="gallerySmall2Img" src="https://starklegalng.com/wp-content/uploads/2026/03/NSIB-149-1024x681.jpg" alt="NSIB 3">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════ 9. FAQ ════ -->
+<section class="section" id="faq">
+  <div class="faq-split">
+    <div class="faq-img-col">
+      <img src="https://starklegalng.com/wp-content/uploads/2026/03/NSIB-122-1024x698.jpg" alt="FAQ">
+      <div class="faq-img-overlay"></div>
+      <div class="faq-img-text">
+        <h3>Have questions?<br>We have answers.</h3>
+        <a href="https://starklegalng.com/contact/" class="btn-gold">Speak to a Lawyer</a>
+      </div>
+    </div>
+    <div class="faq-right">
+      <div class="section-label">Frequently Asked Questions</div>
+      <h2 class="section-title" style="color:var(--navy);">Have Any<br>Questions?</h2>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <button class="faq-q">What is the initial consultation process like?<span class="faq-toggle">+</span></button>
+          <div class="faq-a">Our initial consultation is typically a free, 30-minute meeting where we discuss your legal needs and determine if we are the right fit for your case. You can schedule one online or by phone.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Do you handle cases in other cities or states?<span class="faq-toggle">+</span></button>
+          <div class="faq-a">Yes. Stark Legal has offices in Lagos, Abuja, and Port-Harcourt, and we routinely advise clients on matters across all Nigerian jurisdictions and internationally.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Can I speak to a lawyer immediately?<span class="faq-toggle">+</span></button>
+          <div class="faq-a">For urgent matters, please call us directly on +234 909 685 1318 or +234 803 842 7202. Our team will do its best to connect you with the right attorney promptly.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What industries do you specialise in?<span class="faq-toggle">+</span></button>
+          <div class="faq-a">We specialise in Energy, Transport (including Aviation), Financial Services, Corporate &amp; Commercial Law, and Dispute Resolution — serving both local and international clients.</div>
+        </div>
+      </div>
+      <div class="faq-cta">
+        <a href="https://starklegalng.com/contact/" class="btn-navy">Get in Touch</a>
+        <a href="https://starklegalng.com/publications/" class="btn-ghost-dark">Read Our Publications</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ 10. CONTACT / FOOTER ════ -->
+<section class="section" id="contact">
+  <div class="contact-top">
+    <div class="contact-inner">
+      <div>
+        <div class="section-label">Get in Touch</div>
+        <h2 class="contact-headline">Let's Start<br>the <em>Conversation.</em></h2>
+        <div class="contact-actions">
+          <a href="mailto:info@starklegalng.com" class="btn-gold">Send a Message</a>
+          <a href="https://starklegalng.com/contact/" class="btn-outline-gold">Book Consultation</a>
+        </div>
+      </div>
+      <div class="contact-divider"></div>
+      <div class="contact-info">
+        <div><div class="contact-label">Locations</div><div class="contact-value">Lagos &nbsp;·&nbsp; Abuja &nbsp;·&nbsp; Port-Harcourt</div></div>
+        <div><div class="contact-label">Phone</div><div class="contact-value"><a href="tel:+2349096851318">+234 909 685 1318</a><br><a href="tel:+2348038427202">+234 803 842 7202</a></div></div>
+        <div><div class="contact-label">Email</div><div class="contact-value"><a href="mailto:info@starklegalng.com">info@starklegalng.com</a><br><a href="mailto:admin@starklegalng.com">admin@starklegalng.com</a></div></div>
+        <div><div class="contact-label">Our Expertise</div><div class="contact-value">Energy &nbsp;·&nbsp; Transport &nbsp;·&nbsp; Financial Services<br>Corporate &amp; Commercial Law &nbsp;·&nbsp; Dispute Resolution</div></div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer-bottom">
+    <div class="footer-copy">Copyright © 2025 Stark Legal. All Rights Reserved.</div>
+    <ul class="footer-links">
+      <li><a href="https://starklegalng.com/the-firm/">The Firm</a></li>
+      <li><a href="https://starklegalng.com/expertise/">Our Expertise</a></li>
+      <li><a href="https://starklegalng.com/people/">Our People</a></li>
+      <li><a href="https://starklegalng.com/publications/">Publications</a></li>
+      <li><a href="https://starklegalng.com/contact/">Contact Us</a></li>
+    </ul>
+  </footer>
+</section>
+
+</div><!-- /snap-container -->
+
+<script>
+(function(){
+
+  /* ── SCROLL / PROGRESS / DOTS ── */
+  const container = document.getElementById('snapContainer');
+  const sections  = document.querySelectorAll('.section');
+  const dots      = document.querySelectorAll('.dot');
+  const bar       = document.getElementById('progressBar');
+
+  function updateUI(){
+    const st = container.scrollTop;
+    const total = container.scrollHeight - container.clientHeight;
+    bar.style.width = (total > 0 ? st/total*100 : 0) + '%';
+    let cur = 0;
+    sections.forEach((s,i)=>{ if(st >= s.offsetTop - 80) cur = i; });
+    dots.forEach((d,i)=>d.classList.toggle('active', i===cur));
+    revealAwards(cur);
+  }
+
+  container.addEventListener('scroll', updateUI, {passive:true});
+  dots.forEach(d=>{
+    d.addEventListener('click',()=>{
+      const idx = parseInt(d.dataset.section);
+      container.scrollTo({top: sections[idx].offsetTop, behavior:'smooth'});
+    });
+  });
+
+  /* ── AWARDS STAGGERED REVEAL ── */
+  let awardsRevealed = false;
+  const awardsSection = document.getElementById('awards');
+  const awardTiles    = document.querySelectorAll('.award-tile');
+  function revealAwards(cur){
+    const awardsIdx = Array.from(sections).indexOf(awardsSection);
+    if(cur === awardsIdx && !awardsRevealed){
+      awardsRevealed = true;
+      awardTiles.forEach(t=>{
+        const delay = parseInt(t.dataset.delay||0);
+        setTimeout(()=>t.classList.add('revealed'), delay);
+      });
+    }
+  }
+
+  /* ── HERO ROTATING HEADLINES ── */
+  const slides = [
+    { headline:'We Are A<br>21st Century<br><em>Full Service</em><br>Law Firm.', sub:'Providing excellent legal support to local and international corporate bodies, government agencies, NGOs, and individuals.' },
+    { headline:'At Stark Legal<br>We Provide<br><em>Strategic</em><br>Solutions.', sub:'We understand your market, goals and objectives, and offer the experience and expertise that matters most.' },
+    { headline:'Our Clients<br>Choose Us<br>Because We<br><em>Deliver.</em>', sub:'Trusted by corporations, government agencies, and individuals across Nigeria and beyond for over 11 years.' }
+  ];
+  const headline = document.getElementById('heroHeadline');
+  const subEl    = document.getElementById('heroSub');
+  let hIdx = 0;
+  function rotateHero(){
+    hIdx = (hIdx+1) % slides.length;
+    const next = slides[hIdx];
+    headline.classList.add('slide-out-up');
+    setTimeout(()=>{
+      headline.innerHTML = next.headline;
+      headline.classList.remove('slide-out-up');
+      headline.classList.add('slide-in-up');
+      subEl.style.opacity='0'; subEl.textContent=next.sub;
+      setTimeout(()=>{ subEl.style.transition='opacity .6s'; subEl.style.opacity='.5'; },50);
+      setTimeout(()=>headline.classList.remove('slide-in-up'),650);
+    },620);
+  }
+  setInterval(rotateHero, 4500);
+
+  /* ── GALLERY PREV/NEXT ── */
+  const galleryPages = [
+    {
+      feat:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-326-1024x681.jpg',
+      s1:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-199-1024x683.jpg',
+      s2:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-149-1024x681.jpg'
+    },
+    {
+      feat:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-133-1024x681.jpg',
+      s1:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-132-1024x646.jpg',
+      s2:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-122-1024x698.jpg'
+    },
+    {
+      feat:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-87-1024x681.jpg',
+      s1:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-55-1024x681.jpg',
+      s2:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-39-1024x681.jpg'
+    },
+    {
+      feat:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-19-1024x681.jpg',
+      s1:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-9-1024x681.jpg',
+      s2:'https://starklegalng.com/wp-content/uploads/2026/03/NSIB-4-1024x681.jpg'
+    }
+  ];
+
+  let galPage = 0;
+  const featImg   = document.getElementById('galleryFeatImg');
+  const sm1Img    = document.getElementById('gallerySmall1Img');
+  const sm2Img    = document.getElementById('gallerySmall2Img');
+  const counter   = document.getElementById('galleryCounter');
+  const layout    = document.getElementById('galleryLayout');
+
+  function setGalleryPage(p){
+    galPage = (p + galleryPages.length) % galleryPages.length;
+    const pg = galleryPages[galPage];
+
+    // brief fade-out/fade-in
+    layout.style.opacity = '0';
+    layout.style.transition = 'opacity .3s';
+    setTimeout(()=>{
+      featImg.src = pg.feat;
+      sm1Img.src  = pg.s1;
+      sm2Img.src  = pg.s2;
+      counter.textContent = (galPage+1) + ' / ' + galleryPages.length;
+      layout.style.opacity = '1';
+    }, 300);
+  }
+
+  document.getElementById('galleryPrev').addEventListener('click',()=>setGalleryPage(galPage-1));
+  document.getElementById('galleryNext').addEventListener('click',()=>setGalleryPage(galPage+1));
+
+  /* ── FAQ ── */
+  document.querySelectorAll('.faq-q').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!isOpen) item.classList.add('open');
+    });
+  });
+
+  updateUI();
+})();
+</script>
+</body>
+</html>
