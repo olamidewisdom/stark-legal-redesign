@@ -7,7 +7,7 @@
   <title>Stark Legal | Commercial Law Firm | Nigeria</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
   <style>
     /* ══════════════════════════════════════════
        TOKENS & RESET
@@ -160,6 +160,34 @@
 
     .ico-arr { width: 16px; height: 16px; }
 
+    /* ══ Scroll progress gauge (right-side vertical) ═══ */
+    #progress-track {
+      position: fixed; top: 50%; right: 18px; z-index: 900;
+      transform: translateY(-50%);
+      width: 2px; height: 160px;
+      background: rgba(255,255,255,.10);
+      border-radius: 2px;
+      pointer-events: none;
+    }
+    #progress-bar {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 0%;
+      background: linear-gradient(to bottom, var(--brand-green), var(--gold));
+      border-radius: 2px;
+      transition: height .1s linear;
+    }
+    /* Dot at current position */
+    #progress-bar::after {
+      content: '';
+      position: absolute; bottom: -3px; left: 50%;
+      transform: translateX(-50%);
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 6px rgba(200,169,110,.6);
+    }
+    @media (max-width: 640px) { #progress-track { display: none; } }
+
     /* ══════════════════════════════════════════
        NAVIGATION
     ══════════════════════════════════════════ */
@@ -197,13 +225,14 @@
     .nav-links a:hover { color: var(--white); }
     .nav-links a:hover::after { width: 100%; }
 
-    .nav-cta {
-      font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+    .nav-links .nav-cta {
+      font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 800;
+      letter-spacing: .03em; text-transform: uppercase;
       background: var(--brand-green); color: var(--white) !important;
       padding: 10px 24px; transition: background .3s !important;
     }
-    .nav-cta::after { display: none !important; }
-    .nav-cta:hover { background: var(--brand-green-lt) !important; }
+    .nav-links .nav-cta::after { display: none !important; }
+    .nav-links .nav-cta:hover { background: var(--brand-green-lt) !important; }
 
     .nav-burger {
       display: none; flex-direction: column; gap: 6px;
@@ -858,6 +887,41 @@
     }
     .f-submit:hover { background: var(--brand-blue-lt); border-color: var(--brand-blue-lt); }
 
+    /* Newsletter */
+    .newsletter-wrap {
+      margin-top: 36px; padding-top: 30px;
+      border-top: 1px solid var(--rule);
+    }
+    .nl-label {
+      font-size: 9.5px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--ink-2); margin-bottom: 8px;
+    }
+    .nl-intro {
+      font-size: .875rem; color: var(--ink-2); line-height: 1.65; margin-bottom: 16px;
+    }
+    .nl-form {
+      display: flex; gap: 0;
+    }
+    .nl-input {
+      flex: 1; padding: 13px 15px;
+      background: var(--white); border: 1px solid var(--rule); border-right: none;
+      font-family: var(--sans); font-size: .875rem; color: var(--ink);
+      outline: none; border-radius: 0; transition: border-color .3s;
+    }
+    .nl-input:focus { border-color: var(--brand-blue); }
+    .nl-btn {
+      padding: 13px 22px;
+      background: var(--navy); color: var(--white);
+      font-family: var(--sans); font-size: 10px; font-weight: 500;
+      letter-spacing: .14em; text-transform: uppercase;
+      border: 1px solid var(--navy); cursor: pointer;
+      transition: background .3s, border-color .3s; white-space: nowrap; flex-shrink: 0;
+    }
+    .nl-btn:hover { background: var(--brand-blue); border-color: var(--brand-blue); }
+    .nl-note {
+      font-size: .78rem; color: var(--ink-2); margin-top: 10px; opacity: .7;
+    }
+
     /* ══════════════════════════════════════════
        FOOTER
     ══════════════════════════════════════════ */
@@ -897,6 +961,218 @@
       50%       { opacity: 1; transform: scaleY(1.08); }
     }
 
+    /* ══ Hero headline rotation ═══════════════════════════
+       slide-out: current h1 exits upward; slide-in: new h1 enters from below
+    ══════════════════════════════════════════════════════ */
+    .hero-headline-wrap { overflow: hidden; }
+    @keyframes slideOutUp {
+      from { opacity: 1; transform: translateY(0); }
+      to   { opacity: 0; transform: translateY(-56px); }
+    }
+    @keyframes slideInUp {
+      from { opacity: 0; transform: translateY(56px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-h1.slide-out { animation: slideOutUp .5s var(--ease) forwards !important; }
+    .hero-h1.slide-in  { animation: slideInUp  .5s var(--ease) forwards !important; }
+
+    /* ══ Logo wordmarks (CSS text — no double shield) ═══ */
+    .nav-wordmark-img {
+      height: 15px; width: auto;
+      filter: brightness(0) invert(1);
+      opacity: 0.88;
+      flex-shrink: 0;
+      display: block;
+    }
+    .footer-wordmark-img {
+      height: 13px; width: auto;
+      filter: brightness(0) invert(1);
+      opacity: 0.55;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    /* ══ Logo cloud images ══════════════════════════════ */
+    .lc-logo {
+      display: inline-block;
+      height: 28px; width: auto; max-width: 120px;
+      object-fit: contain; flex-shrink: 0;
+      filter: brightness(0) invert(1);
+      opacity: 0.28;
+      transition: opacity .35s;
+      vertical-align: middle;
+      /* each logo gets even breathing room on both sides */
+      padding: 0 38px;
+      box-sizing: content-box;
+    }
+    .lc-logo:hover { opacity: 0.72; }
+    /* hide dot separators — padding now handles rhythm */
+    .lc-sep { display: none; }
+
+    /* ══ PHOTO GALLERY section ══════════════════════════ */
+    #photo-gallery { background: var(--navy); padding: var(--sec-py) 0 var(--sec-py); overflow: hidden; }
+    .pg-header {
+      display: flex; align-items: flex-end;
+      justify-content: space-between; gap: 48px;
+      margin-bottom: 64px;
+    }
+    .pg-header-right {
+      font-size: .975rem; color: rgba(255,255,255,.38);
+      max-width: 340px; line-height: 1.82;
+    }
+    /* ── Photo masonry grid ── */
+    .nsib-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 248px;
+      gap: 5px;
+      margin-top: 40px;
+    }
+    .nsib-item {
+      position: relative; overflow: hidden;
+    }
+    .nsib-item img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top;
+      filter: brightness(.78) saturate(.65);
+      transition: filter .5s ease, transform .5s ease;
+      display: block;
+    }
+    .nsib-item:hover img { filter: brightness(.94) saturate(1); transform: scale(1.04); }
+    .nsib-item--tall  { grid-row: span 2; }
+    .nsib-item--wide  { grid-column: span 2; }
+    /* Gallery hidden extra rows */
+    .nsib-item.nsib-extra { display: none; }
+    .nsib-grid.open .nsib-item.nsib-extra { display: block; }
+    /* Gallery toggle button */
+    .nsib-toggle-row { display: flex; justify-content: center; padding: 28px 0 0; }
+    .nsib-toggle {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(255,255,255,.5); background: none; border: 1px solid rgba(255,255,255,.18);
+      padding: 13px 32px; cursor: pointer;
+      transition: color .3s, border-color .3s;
+    }
+    .nsib-toggle:hover { color: var(--white); border-color: rgba(255,255,255,.45); }
+    .nsib-toggle svg { transition: transform .35s var(--ease); flex-shrink: 0; }
+    .nsib-toggle.open svg { transform: rotate(180deg); }
+    .nsib-cap {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 28px 16px 14px;
+      background: linear-gradient(transparent, rgba(0,0,0,.55));
+      font-size: 9px; font-weight: 500; letter-spacing: .16em;
+      text-transform: uppercase; color: rgba(255,255,255,.55);
+      pointer-events: none;
+    }
+    .pg-nav { display: flex; justify-content: flex-end; gap: 10px; padding: 32px 0 56px; }
+    .pg-btn {
+      width: 48px; height: 48px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: none; color: rgba(255,255,255,.45);
+      cursor: pointer; display: grid; place-items: center;
+      transition: all .3s;
+    }
+    .pg-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ══ NEWS / PUBLICATIONS section ════════════════════ */
+    #news { background: var(--cream); padding: var(--sec-py) 0; }
+    .news-hd {
+      display: flex; align-items: flex-end;
+      justify-content: space-between; gap: 40px;
+      margin-bottom: 64px;
+    }
+    .news-hd-right { font-size: .975rem; color: var(--ink-2); max-width: 360px; line-height: 1.82; }
+    .news-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+    .news-card { background: var(--white); display: flex; flex-direction: column; overflow: hidden; }
+    .nc-img { overflow: hidden; flex-shrink: 0; }
+    .nc-img img {
+      width: 100%; height: 218px; object-fit: cover;
+      filter: saturate(.82); display: block;
+      transition: transform .55s cubic-bezier(.4,0,.2,1), filter .55s;
+    }
+    .news-card:hover .nc-img img { transform: scale(1.04); filter: saturate(1); }
+    .nc-body { padding: 30px 32px 36px; display: flex; flex-direction: column; flex: 1; }
+    .nc-meta { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .nc-tag {
+      font-size: 9px; font-weight: 500; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--gold);
+      border: 1px solid rgba(200,169,110,.3); padding: 4px 11px;
+    }
+    .nc-date {
+      font-size: 9px; font-weight: 400; letter-spacing: .1em;
+      color: var(--ink-2); text-transform: uppercase;
+    }
+    .nc-title {
+      font-family: var(--serif); font-size: 1.28rem; font-weight: 400;
+      color: var(--navy); line-height: 1.22; margin-bottom: 13px;
+    }
+    .nc-excerpt { font-size: .855rem; color: var(--ink-2); line-height: 1.78; flex: 1; margin-bottom: 22px; }
+    .nc-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 10px; font-weight: 500; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--navy); transition: color .3s;
+    }
+    .nc-link::after { content: '→'; transition: transform .3s; }
+    .nc-link:hover { color: var(--gold); }
+    .nc-link:hover::after { transform: translateX(5px); }
+
+    /* ── Publications extra / dropdown ── */
+    .news-extra-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 3px;
+      margin-top: 3px;
+      /* collapsed */
+      max-height: 0; overflow: hidden;
+      transition: max-height .6s cubic-bezier(.4,0,.2,1);
+    }
+    .news-extra-grid.open { max-height: 1600px; }
+    .news-toggle-row {
+      display: flex; justify-content: center;
+      padding: 48px 0 8px;
+    }
+    .news-toggle {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--ink-2); background: none; border: 1px solid rgba(0,0,0,.12);
+      padding: 13px 32px; cursor: pointer;
+      transition: color .3s, border-color .3s;
+    }
+    .news-toggle:hover { color: var(--navy); border-color: var(--navy); }
+    .news-toggle svg { transition: transform .35s var(--ease); flex-shrink: 0; }
+    .news-toggle.open svg { transform: rotate(180deg); }
+
+    /* ══ FAQ section ════════════════════════════════════ */
+    #faq { background: var(--navy); padding: var(--sec-py) 0; }
+    .faq-inner {
+      display: grid; grid-template-columns: 360px 1fr;
+      gap: 100px; align-items: start;
+    }
+    .faq-intro { font-size: .975rem; color: rgba(255,255,255,.44); line-height: 1.82; margin-top: 22px; }
+    .faq-list { display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,.08); }
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,.08); }
+    .faq-q {
+      width: 100%; display: flex; align-items: center;
+      justify-content: space-between; gap: 24px;
+      padding: 22px 0; background: none; border: none;
+      cursor: pointer; text-align: left;
+      font-family: var(--serif); font-size: 1.1rem; font-weight: 400;
+      color: rgba(255,255,255,.68); transition: color .3s;
+    }
+    .faq-q:hover { color: var(--white); }
+    .faq-icon {
+      font-size: 1.5rem; line-height: 1; color: var(--gold);
+      flex-shrink: 0; transition: transform .4s var(--ease); font-weight: 300;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-item.open .faq-q    { color: var(--white); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height .5s cubic-bezier(.4,0,.2,1);
+    }
+    .faq-a p {
+      font-size: .92rem; color: rgba(255,255,255,.42);
+      line-height: 1.82; padding-bottom: 24px;
+    }
+    .faq-item.open .faq-a { max-height: 260px; }
+
     /* ══════════════════════════════════════════
        RESPONSIVE
     ══════════════════════════════════════════ */
@@ -912,9 +1188,9 @@
       .awards-inner { grid-template-columns: 1fr; gap: 56px; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
       .hero-scroll-hint { display: none; }
-      /* Gallery: reduce to 200vh on medium screens */
       #gal-zone { height: 220vh; }
       #gl5, #gl6 { opacity: .5; }
+      .faq-inner { grid-template-columns: 1fr; gap: 56px; }
     }
     @media (max-width: 900px) {
       :root { --sec-py: 100px; }
@@ -937,9 +1213,16 @@
       .tsp--a { width: 130px; height: 165px; }
       .tsp--b { width: 145px; height: 180px; }
       .tsp--c { width: 138px; height: 172px; }
-      /* Gallery on tablet: simpler parallax */
       #gal-zone { height: 180vh; }
       #gl5, #gl6 { display: none; }
+      .news-grid { grid-template-columns: 1fr 1fr; }
+      .news-extra-grid { grid-template-columns: 1fr 1fr; }
+      .pg-header { flex-direction: column; align-items: flex-start; }
+      .news-hd { flex-direction: column; align-items: flex-start; }
+      .nsib-grid { grid-auto-rows: 200px; }
+      .nl-form { flex-direction: column; }
+      .nl-input { border-right: 1px solid var(--rule); border-bottom: none; }
+      .nl-btn { border-top: none; }
     }
     @media (max-width: 640px) {
       :root { --nav-h: 64px; --sec-py: 80px; }
@@ -966,10 +1249,19 @@
       .tsp--c { width: 115px; height: 147px; }
       .testi-right { padding-left: 0; border-left: none; border-top: 1px solid var(--rule); padding-top: 32px; }
       .testi-bgnum { display: none; }
+      .news-grid { grid-template-columns: 1fr; }
+      .news-extra-grid { grid-template-columns: 1fr; }
+      .nsib-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+      .nsib-item--wide { grid-column: span 2; }
     }
   </style>
 </head>
 <body>
+
+<!-- Scroll progress gauge — vertical right-side indicator -->
+<div id="progress-track" aria-hidden="true">
+  <div id="progress-bar"></div>
+</div>
 
 <!-- ══ NAV ══════════════════════════════════ -->
 <nav id="nav" aria-label="Main navigation">
@@ -977,15 +1269,15 @@
     <a href="#hero" class="nav-logo" aria-label="Stark Legal home">
       <img src="https://starklegalng.com/wp-content/uploads/2025/05/starklegal-icon.png"
            alt="Stark Legal shield" class="nav-icon" width="42" height="42">
-      <div class="nav-name">Stark <span>Legal</span></div>
+      <img src="starklegal-wordmark.png" class="nav-wordmark-img" alt="Stark Legal">
     </a>
     <ul class="nav-links" role="list">
       <li><a href="#about">About</a></li>
       <li><a href="#practice">Practice</a></li>
-      <li><a href="#testi">Clients</a></li>
+      <li><a href="#photo-gallery">Gallery</a></li>
       <li><a href="#team">People</a></li>
-      <li><a href="#awards">Recognition</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#news">Insights</a></li>
+      <li><a href="#faq">FAQ</a></li>
       <li><a href="#contact" class="nav-cta">Book Consultation</a></li>
     </ul>
     <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false">
@@ -996,12 +1288,13 @@
 
 <!-- Mobile overlay menu -->
 <div id="mob-menu" role="dialog" aria-label="Mobile navigation">
-  <a href="#about"    onclick="closeMob()">About</a>
-  <a href="#practice" onclick="closeMob()">Practice</a>
-  <a href="#testi"    onclick="closeMob()">Clients</a>
-  <a href="#team"     onclick="closeMob()">People</a>
-  <a href="#awards"   onclick="closeMob()">Recognition</a>
-  <a href="#contact"  onclick="closeMob()">Contact</a>
+  <a href="#about"         onclick="closeMob()">About</a>
+  <a href="#practice"      onclick="closeMob()">Practice</a>
+  <a href="#photo-gallery" onclick="closeMob()">Gallery</a>
+  <a href="#team"          onclick="closeMob()">People</a>
+  <a href="#news"          onclick="closeMob()">Insights</a>
+  <a href="#faq"           onclick="closeMob()">FAQ</a>
+  <a href="#contact"       onclick="closeMob()">Book Consultation</a>
 </div>
 
 <!-- ══ HERO ══════════════════════════════════ -->
@@ -1034,12 +1327,14 @@
 
   <div class="W hero-body">
     <div class="hero-loc">Lagos &nbsp;·&nbsp; Abuja &nbsp;·&nbsp; Port-Harcourt</div>
-    <h1 class="hero-h1">
-      Strategic<br>
-      <em>Commercial</em><br>
-      Excellence
-    </h1>
-    <p class="hero-sub">"Pursue Excellence and Success will Follow"</p>
+    <div class="hero-headline-wrap">
+      <h1 class="hero-h1" id="heroHeadline">
+        Strategic<br>
+        <em>Commercial</em><br>
+        Excellence
+      </h1>
+    </div>
+    <p class="hero-sub" id="heroSub">"Pursue Excellence and Success will Follow"</p>
     <div class="hero-btns">
       <a href="#practice" class="btn btn-gold">
         Our Practice Areas
@@ -1125,59 +1420,59 @@
       <!-- Scroll cue hint -->
       <div class="gal-cue" aria-hidden="true">Scroll</div>
 
-      <!-- Layer 0 · center · 28vw×32vh · scale→4 -->
+      <!-- Layer 0 · center · 28vw×32vh · scale→4 — Handshake (MAIN / final reveal) -->
       <div class="gal-layer" id="gl0">
         <div class="gal-box" style="width:28vw;height:32vh;">
-          <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?w=700&h=600&fit=crop&auto=format&q=80"
-               alt="Legal team in meeting" loading="lazy">
+          <img src="Parallax%20Zoom%20Scroll/cytonn-photography-n95VMLxqM2I-unsplash.jpg"
+               alt="Business handshake — Stark Legal client engagement" loading="lazy">
         </div>
       </div>
 
-      <!-- Layer 1 · upper-right · 32vw×28vh · scale→5 -->
+      <!-- Layer 1 · upper-right · 32vw×28vh · scale→5 — Lagos Victoria Island skyline -->
       <div class="gal-layer" id="gl1">
         <div class="gal-box" style="width:32vw;height:28vh;transform:translate(18vw,-24vh);">
-          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop&auto=format&q=80"
-               alt="Modern corporate tower" loading="lazy">
+          <img src="Parallax%20Zoom%20Scroll/nupo-deyon-daniel-67ruAEYmp4c-unsplash.jpg"
+               alt="Lagos Victoria Island skyline" loading="lazy">
         </div>
       </div>
 
-      <!-- Layer 2 · lower-left · 26vw×24vh · scale→6 -->
+      <!-- Layer 2 · lower-left · 26vw×24vh · scale→6 — Courtroom interior -->
       <div class="gal-layer" id="gl2">
         <div class="gal-box" style="width:26vw;height:24vh;transform:translate(-22vw,20vh);">
-          <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=700&h=500&fit=crop&auto=format&q=80"
-               alt="Lagos city skyline" loading="lazy">
+          <img src="Parallax%20Zoom%20Scroll/david-veksler-HpmDAS1Dozs-unsplash.jpg"
+               alt="Courtroom interior" loading="lazy">
         </div>
       </div>
 
-      <!-- Layer 3 · lower-right · 30vw×26vh · scale→5 -->
+      <!-- Layer 3 · lower-right · 30vw×26vh · scale→5 — Legal document review -->
       <div class="gal-layer" id="gl3">
         <div class="gal-box" style="width:30vw;height:26vh;transform:translate(20vw,22vh);">
-          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=600&fit=crop&auto=format&q=80"
-               alt="Scales of justice" loading="lazy">
+          <img src="Parallax%20Zoom%20Scroll/amina-atar-Mqc-m8kgxkg-unsplash.jpg"
+               alt="Legal document consultation" loading="lazy">
         </div>
       </div>
 
-      <!-- Layer 4 · upper-left · 24vw×28vh · scale→6 -->
+      <!-- Layer 4 · upper-left · 24vw×28vh · scale→6 — Nigeria welcome arch -->
       <div class="gal-layer" id="gl4">
         <div class="gal-box" style="width:24vw;height:28vh;transform:translate(-20vw,-22vh);">
-          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&h=700&fit=crop&auto=format&q=80"
-               alt="Modern office interior" loading="lazy">
+          <img src="Parallax%20Zoom%20Scroll/david-rotimi-LxENUKJXh_k-unsplash.jpg"
+               alt="Nigeria welcome arch" loading="lazy">
         </div>
       </div>
 
-      <!-- Layer 5 · far-right · 22vw×22vh · scale→8 -->
+      <!-- Layer 5 · far-right · 22vw×22vh · scale→8 — Lagos busy street aerial -->
       <div class="gal-layer" id="gl5">
         <div class="gal-box" style="width:22vw;height:22vh;transform:translate(36vw,-6vh);">
-          <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=600&h=500&fit=crop&auto=format&q=80"
-               alt="Executive office desk" loading="lazy">
+          <img src="Parallax%20Zoom%20Scroll/opeyemi-adisa-cFT_Xq4XyA0-unsplash.jpg"
+               alt="Lagos commercial street aerial view" loading="lazy">
         </div>
       </div>
 
-      <!-- Layer 6 · far-left · 20vw×18vh · scale→9 -->
+      <!-- Layer 6 · far-left · 20vw×18vh · scale→9 — Airplane in flight -->
       <div class="gal-layer" id="gl6">
         <div class="gal-box" style="width:20vw;height:18vh;transform:translate(-36vw,4vh);">
-          <img src="https://images.unsplash.com/photo-1564069114553-7215e1ff1890?w=550&h=420&fit=crop&auto=format&q=80"
-               alt="Law reference books" loading="lazy">
+          <img src="Parallax%20Zoom%20Scroll/chris-leipelt-XfGuPGBJyZc-unsplash.jpg"
+               alt="Airplane in flight — Transport & Aviation practice" loading="lazy">
         </div>
       </div>
 
@@ -1230,55 +1525,79 @@
   <div class="lc-label">Trusted by leading institutions across Nigeria</div>
   <div class="lc-track-wrap">
     <div class="lc-track" aria-hidden="true">
-      <!-- First set -->
-      <span class="lc-item">Nigerian Safety Investigation Bureau</span>
+      <!-- First set — local logos, brightness(0) invert(1) for white-on-navy display -->
+      <img class="lc-logo" src="infinitescroll_logos/mtn-logo.svg"                    alt="MTN Nigeria">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">NNPC Limited</span>
+      <img class="lc-logo" src="infinitescroll_logos/GTCO_logo.png"                   alt="GTCO">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Central Bank of Nigeria</span>
+      <img class="lc-logo" src="infinitescroll_logos/Zenith_Bank_Logo.png"            alt="Zenith Bank">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Nigerian Ports Authority</span>
+      <img class="lc-logo" src="infinitescroll_logos/airtel-logo.png"                 alt="Airtel Nigeria">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Access Bank Plc</span>
+      <img class="lc-logo" src="infinitescroll_logos/UBA-logo.svg"                    alt="UBA">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Nigerian Civil Aviation Authority</span>
+      <img class="lc-logo" src="infinitescroll_logos/access-lg-logo.png"              alt="Access Bank">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Dangote Industries</span>
+      <img class="lc-logo" src="infinitescroll_logos/dangote-logo.svg"                alt="Dangote Group">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Securities &amp; Exchange Commission</span>
+      <img class="lc-logo" src="infinitescroll_logos/shell-logo.png"                  alt="Shell">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">MTN Nigeria</span>
+      <img class="lc-logo" src="infinitescroll_logos/NNPC_logo.png"                   alt="NNPC Limited">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Nigerian Midstream &amp; Downstream Petroleum Regulatory Authority</span>
+      <img class="lc-logo" src="infinitescroll_logos/Stanbic%20ibtc%20logo.png"       alt="Stanbic IBTC">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Transcorp Hotels</span>
+      <img class="lc-logo" src="infinitescroll_logos/Transcorp_Hotels_Logo.png"       alt="Transcorp Hotels">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Sterling Bank Plc</span>
+      <img class="lc-logo" src="infinitescroll_logos/CBN_Logo_Wordmark.png"           alt="Central Bank of Nigeria">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/SEC_logo.svg"                    alt="SEC Nigeria">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/NCAA_logo.png"                   alt="NCAA Nigeria">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/Nmdpra-new-logo.png"             alt="NMDPRA">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/npa_logo.webp"                   alt="Nigerian Ports Authority">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/nsib-logo.jpg"                   alt="NSIB">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/sterling-bank-logo.png"          alt="Sterling Bank">
       <span class="lc-sep" role="presentation"></span>
       <!-- Duplicate set for seamless loop -->
-      <span class="lc-item">Nigerian Safety Investigation Bureau</span>
+      <img class="lc-logo" src="infinitescroll_logos/mtn-logo.svg"                    alt="MTN Nigeria">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">NNPC Limited</span>
+      <img class="lc-logo" src="infinitescroll_logos/GTCO_logo.png"                   alt="GTCO">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Central Bank of Nigeria</span>
+      <img class="lc-logo" src="infinitescroll_logos/Zenith_Bank_Logo.png"            alt="Zenith Bank">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Nigerian Ports Authority</span>
+      <img class="lc-logo" src="infinitescroll_logos/airtel-logo.png"                 alt="Airtel Nigeria">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Access Bank Plc</span>
+      <img class="lc-logo" src="infinitescroll_logos/UBA-logo.svg"                    alt="UBA">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Nigerian Civil Aviation Authority</span>
+      <img class="lc-logo" src="infinitescroll_logos/access-lg-logo.png"              alt="Access Bank">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Dangote Industries</span>
+      <img class="lc-logo" src="infinitescroll_logos/dangote-logo.svg"                alt="Dangote Group">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Securities &amp; Exchange Commission</span>
+      <img class="lc-logo" src="infinitescroll_logos/shell-logo.png"                  alt="Shell">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">MTN Nigeria</span>
+      <img class="lc-logo" src="infinitescroll_logos/NNPC_logo.png"                   alt="NNPC Limited">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Nigerian Midstream &amp; Downstream Petroleum Regulatory Authority</span>
+      <img class="lc-logo" src="infinitescroll_logos/Stanbic%20ibtc%20logo.png"       alt="Stanbic IBTC">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Transcorp Hotels</span>
+      <img class="lc-logo" src="infinitescroll_logos/Transcorp_Hotels_Logo.png"       alt="Transcorp Hotels">
       <span class="lc-sep" role="presentation"></span>
-      <span class="lc-item">Sterling Bank Plc</span>
+      <img class="lc-logo" src="infinitescroll_logos/CBN_Logo_Wordmark.png"           alt="Central Bank of Nigeria">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/SEC_logo.svg"                    alt="SEC Nigeria">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/NCAA_logo.png"                   alt="NCAA Nigeria">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/Nmdpra-new-logo.png"             alt="NMDPRA">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/npa_logo.webp"                   alt="Nigerian Ports Authority">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/nsib-logo.jpg"                   alt="NSIB">
+      <span class="lc-sep" role="presentation"></span>
+      <img class="lc-logo" src="infinitescroll_logos/sterling-bank-logo.png"          alt="Sterling Bank">
       <span class="lc-sep" role="presentation"></span>
     </div>
   </div>
@@ -1642,6 +1961,289 @@
   </div>
 </section>
 
+<!-- ══ PHOTO GALLERY ════════════════════════════════ -->
+<section id="photo-gallery" aria-labelledby="photo-gallery-h">
+
+  <div class="W">
+    <div class="pg-header">
+      <div class="sr">
+        <div class="eyebrow eyebrow--dim">Gallery</div>
+        <h2 class="H2 H2--lt" id="photo-gallery-h">Stark Legal<br>in Focus</h2>
+      </div>
+      <p class="pg-header-right sr d2">
+        From boardroom negotiations to landmark safety briefings — a glimpse into the firm at work across Nigeria's most consequential sectors.
+      </p>
+    </div>
+  </div>
+
+  <!-- NSIB Event Photo Masonry Grid -->
+  <div class="W">
+    <div class="nsib-grid">
+
+      <!-- Row 1: item1 + item2(tall) + item3 -->
+      <figure class="nsib-item sr">
+        <img src="GalleryPictures/NSIB-9-scaled.jpg" alt="NSIB Safety Summit networking" loading="lazy">
+        <figcaption class="nsib-cap">NSIB Safety Summit · Lagos, 2025</figcaption>
+      </figure>
+
+      <figure class="nsib-item nsib-item--tall sr d1">
+        <img src="GalleryPictures/NSIB-199-scaled.jpg" alt="NSIB Safety Summit speakers" loading="lazy">
+        <figcaption class="nsib-cap">Aviation Safety Forum · Stark Legal</figcaption>
+      </figure>
+
+      <figure class="nsib-item sr d2">
+        <img src="GalleryPictures/NSIB-122-scaled.jpg" alt="NSIB stakeholder engagement" loading="lazy">
+        <figcaption class="nsib-cap">Stakeholder Engagement · 2025</figcaption>
+      </figure>
+
+      <!-- Row 2: item4 + (item2 continues) + item5 -->
+      <figure class="nsib-item sr">
+        <img src="GalleryPictures/NSIB-87-scaled.jpg" alt="NSIB conference session" loading="lazy">
+        <figcaption class="nsib-cap">Conference Session · Abuja</figcaption>
+      </figure>
+
+      <figure class="nsib-item sr d1">
+        <img src="GalleryPictures/NSIB-132-scaled.jpg" alt="NSIB panel discussion" loading="lazy">
+        <figcaption class="nsib-cap">Panel Discussion · NSIB Forum</figcaption>
+      </figure>
+
+      <!-- Row 3–4: extra items, hidden until toggle -->
+      <figure class="nsib-item nsib-item--wide nsib-extra">
+        <img src="GalleryPictures/NSIB-55-scaled.jpg" alt="NSIB keynote event" loading="lazy">
+        <figcaption class="nsib-cap">Keynote Address · Safety Summit 2025</figcaption>
+      </figure>
+
+      <figure class="nsib-item nsib-extra">
+        <img src="GalleryPictures/NSIB-149-scaled.jpg" alt="NSIB briefing session" loading="lazy">
+        <figcaption class="nsib-cap">Media Briefing · Lagos</figcaption>
+      </figure>
+
+      <figure class="nsib-item nsib-extra">
+        <img src="GalleryPictures/NSIB-133-scaled.jpg" alt="NSIB delegates networking" loading="lazy">
+        <figcaption class="nsib-cap">Delegate Networking · 2025</figcaption>
+      </figure>
+
+      <figure class="nsib-item nsib-item--wide nsib-extra">
+        <img src="GalleryPictures/NSIB-326-scaled.jpg" alt="NSIB Safety Summit closing" loading="lazy">
+        <figcaption class="nsib-cap">Safety Summit Closing · Stark Legal</figcaption>
+      </figure>
+
+    </div>
+    <div class="nsib-toggle-row">
+      <button class="nsib-toggle" id="nsibToggle" aria-expanded="false" aria-controls="nsib-grid">
+        <span id="nsibToggleLabel">Show More Photos</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 4.5l5 5 5-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+
+</section>
+
+<!-- ══ NEWS & PUBLICATIONS ═══════════════════════════ -->
+<section id="news" aria-labelledby="news-h">
+  <div class="W">
+
+    <div class="news-hd">
+      <div class="sr">
+        <div class="eyebrow">Insights</div>
+        <h2 class="H2" id="news-h">Articles &amp;<br>Publications</h2>
+      </div>
+      <p class="news-hd-right sr d2">
+        Our lawyers share thinking on the legal issues shaping Nigeria's economy — from regulatory reform to landmark arbitration.
+      </p>
+    </div>
+
+    <div class="news-grid">
+
+      <article class="news-card sr">
+        <div class="nc-img">
+          <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&h=440&fit=crop&auto=format&q=85"
+               alt="Nigeria Petroleum Industry Act analysis" loading="lazy">
+        </div>
+        <div class="nc-body">
+          <div class="nc-meta">
+            <span class="nc-tag">Energy Law</span>
+            <time class="nc-date" datetime="2025-03">March 2025</time>
+          </div>
+          <h3 class="nc-title">Nigeria's Petroleum Industry Act: Two Years On</h3>
+          <p class="nc-excerpt">An analysis of how the PIA has reshaped the legal landscape for upstream operators and its implications for licensing, dispute resolution, and investor confidence in Nigeria's energy sector.</p>
+          <a href="#contact" class="nc-link">Read More</a>
+        </div>
+      </article>
+
+      <article class="news-card sr d1">
+        <div class="nc-img">
+          <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800&h=440&fit=crop&auto=format&q=85"
+               alt="Aviation law Nigeria transport sector" loading="lazy">
+        </div>
+        <div class="nc-body">
+          <div class="nc-meta">
+            <span class="nc-tag">Transport &amp; Aviation</span>
+            <time class="nc-date" datetime="2025-01">January 2025</time>
+          </div>
+          <h3 class="nc-title">NSIB Investigations &amp; Airline Liability: A Practitioner's Guide</h3>
+          <p class="nc-excerpt">Following our engagement with the Nigerian Safety Investigation Bureau, we examine the intersection of safety investigations and civil liability — and how airlines, operators, and insurers should respond.</p>
+          <a href="#contact" class="nc-link">Read More</a>
+        </div>
+      </article>
+
+      <article class="news-card sr d2">
+        <div class="nc-img">
+          <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=440&fit=crop&auto=format&q=85"
+               alt="Capital markets fintech Nigeria" loading="lazy">
+        </div>
+        <div class="nc-body">
+          <div class="nc-meta">
+            <span class="nc-tag">Financial Services</span>
+            <time class="nc-date" datetime="2024-10">October 2024</time>
+          </div>
+          <h3 class="nc-title">Fintech Regulation in Nigeria: Navigating the SEC's Digital Asset Framework</h3>
+          <p class="nc-excerpt">With the SEC's updated guidelines on digital assets and virtual asset service providers, Nigerian fintechs face a rapidly shifting regulatory environment. Our financial services team breaks down what you need to know.</p>
+          <a href="#contact" class="nc-link">Read More</a>
+        </div>
+      </article>
+
+    </div><!-- /news-grid -->
+
+    <!-- Additional publications — hidden until toggle clicked -->
+    <div class="news-extra-grid" id="newsExtra">
+
+      <article class="news-card">
+        <div class="nc-img">
+          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&h=440&fit=crop&auto=format&q=85"
+               alt="Corporate dispute resolution Nigeria" loading="lazy">
+        </div>
+        <div class="nc-body">
+          <div class="nc-meta">
+            <span class="nc-tag">Dispute Resolution</span>
+            <time class="nc-date" datetime="2024-07">July 2024</time>
+          </div>
+          <h3 class="nc-title">Arbitration in Nigeria: Choosing the Right Forum</h3>
+          <p class="nc-excerpt">A comparative analysis of domestic and international arbitration options for commercial disputes, including the Lagos Court of Arbitration, ICSID, and ICC — with practical guidance on seat selection.</p>
+          <a href="#contact" class="nc-link">Read More</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="nc-img">
+          <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=440&fit=crop&auto=format&q=85"
+               alt="Corporate governance Nigeria companies act" loading="lazy">
+        </div>
+        <div class="nc-body">
+          <div class="nc-meta">
+            <span class="nc-tag">Corporate &amp; Commercial</span>
+            <time class="nc-date" datetime="2024-04">April 2024</time>
+          </div>
+          <h3 class="nc-title">CAMA 2020: Four Years Later — What Boards Must Know</h3>
+          <p class="nc-excerpt">The Companies and Allied Matters Act 2020 transformed corporate governance in Nigeria. We review enforcement trends, common compliance gaps, and what directors should prioritise in 2024.</p>
+          <a href="#contact" class="nc-link">Read More</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="nc-img">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&h=440&fit=crop&auto=format&q=85"
+               alt="Maritime shipping port Nigeria law" loading="lazy">
+        </div>
+        <div class="nc-body">
+          <div class="nc-meta">
+            <span class="nc-tag">Transport &amp; Aviation</span>
+            <time class="nc-date" datetime="2024-01">January 2024</time>
+          </div>
+          <h3 class="nc-title">Port Operations &amp; Maritime Liability Under Nigerian Law</h3>
+          <p class="nc-excerpt">With the Nigerian Ports Authority's reform programme in full swing, we examine the liability framework for port operators, terminal concessionaires, and cargo interests under the Merchant Shipping Act.</p>
+          <a href="#contact" class="nc-link">Read More</a>
+        </div>
+      </article>
+
+    </div><!-- /news-extra-grid -->
+
+    <!-- Toggle button -->
+    <div class="news-toggle-row">
+      <button class="news-toggle" id="newsToggle" aria-expanded="false" aria-controls="newsExtra">
+        <span id="newsToggleLabel">More Publications</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M2 4.5l5 5 5-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ FAQ ════════════════════════════════════════════ -->
+<section id="faq" aria-labelledby="faq-h">
+  <div class="W">
+    <div class="faq-inner">
+
+      <div class="sr">
+        <div class="eyebrow eyebrow--dim">Common Questions</div>
+        <h2 class="H2 H2--lt" id="faq-h">Frequently<br>Asked Questions</h2>
+        <p class="faq-intro">
+          Answers to the questions our new clients most often ask — before, during, and after an engagement.
+        </p>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item sr">
+          <button class="faq-q" aria-expanded="false">
+            <span>What types of clients does Stark Legal work with?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <p>We work with a broad range of clients including local and international corporations, government agencies, regulatory bodies, non-governmental organisations, and high-net-worth individuals. Our client list spans the energy, transport, financial services, and technology sectors across Nigeria and beyond.</p>
+          </div>
+        </div>
+
+        <div class="faq-item sr d1">
+          <button class="faq-q" aria-expanded="false">
+            <span>How do I begin an engagement with the firm?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <p>Begin by completing our contact form or reaching us by phone or email. We will arrange a preliminary consultation to understand your matter, confirm there is no conflict of interest, and propose a clear scope and fee arrangement before any formal instruction is given.</p>
+          </div>
+        </div>
+
+        <div class="faq-item sr d2">
+          <button class="faq-q" aria-expanded="false">
+            <span>Does Stark Legal handle international matters?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <p>Yes. While we are a Nigerian-focused firm, many of our mandates have cross-border dimensions — particularly in energy transactions, international arbitration, and foreign investment into Nigeria. We maintain working relationships with reputable counsel in key jurisdictions to ensure seamless support wherever needed.</p>
+          </div>
+        </div>
+
+        <div class="faq-item sr d3">
+          <button class="faq-q" aria-expanded="false">
+            <span>What are your offices and hours of operation?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <p>Stark Legal maintains offices in Lagos, Abuja, and Port-Harcourt. Our standard hours are Monday to Friday, 8:30am to 5:30pm WAT. For urgent matters, clients may reach the relevant partner directly via contact details provided at the start of the engagement.</p>
+          </div>
+        </div>
+
+        <div class="faq-item sr">
+          <button class="faq-q" aria-expanded="false">
+            <span>How does Stark Legal structure its fees?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            <p>We offer flexible fee arrangements tailored to each matter — including time-based billing, fixed fees for well-defined transactions, and retainer arrangements for ongoing advisory relationships. All fee structures are agreed in writing before the engagement commences, with no surprise charges.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══ CONTACT — with D3 rotating globe (sample5) ══ -->
 <section id="contact" aria-labelledby="contact-h">
   <div class="W">
@@ -1721,6 +2323,18 @@
           <div class="fg"><label for="msg">Message</label><textarea id="msg" placeholder="Briefly describe your legal matter..."></textarea></div>
           <button type="submit" class="f-submit">Send Message</button>
         </form>
+
+        <!-- Newsletter signup -->
+        <div class="newsletter-wrap">
+          <div class="nl-label">Stay informed</div>
+          <p class="nl-intro">Legal insights, sector updates, and firm news — delivered to your inbox.</p>
+          <form class="nl-form" id="nlform" novalidate>
+            <input type="email" class="nl-input" id="nlEmail" placeholder="Your email address" autocomplete="email" required>
+            <button type="submit" class="nl-btn">Subscribe</button>
+          </form>
+          <p class="nl-note">No spam. Unsubscribe anytime.</p>
+        </div>
+
       </div>
 
     </div>
@@ -1735,7 +2349,7 @@
         <div class="footer-logo">
           <img src="https://starklegalng.com/wp-content/uploads/2025/05/starklegal-icon.png"
                alt="" class="footer-icon" aria-hidden="true" width="38" height="38">
-          <div class="footer-name">Stark Legal</div>
+          <img src="starklegal-wordmark.png" class="footer-wordmark-img" alt="Stark Legal">
         </div>
         <p class="footer-tag">"Pursue Excellence<br>and Success will Follow"</p>
         <div class="footer-socials">
@@ -1791,6 +2405,18 @@
 /* ── NAV scroll effect ──────────────────────── */
 const nav = document.getElementById('nav');
 addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 60), { passive: true });
+
+/* ── Scroll progress gauge ───────────────────── */
+(function () {
+  const bar = document.getElementById('progress-bar');
+  if (!bar) return;
+  function updateProgress() {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.height = total > 0 ? (window.scrollY / total * 100) + '%' : '0%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+})();
 
 /* ── Mobile menu ────────────────────────────── */
 const burger  = document.getElementById('burger');
@@ -2174,6 +2800,155 @@ async function initGlobe() {
 
   window.addEventListener('beforeunload', () => rotTimer.stop());
 }
+
+/* ══════════════════════════════════════════════
+   HERO HEADLINE ROTATION — 3 slides, 4500ms interval
+   slideOutUp exits, slideInUp enters from below
+══════════════════════════════════════════════ */
+const HERO_SLIDES = [
+  {
+    h:   'Strategic<br><em>Commercial</em><br>Excellence',
+    sub: '"Pursue Excellence and Success will Follow"'
+  },
+  {
+    h:   'Your Trusted<br><em>Legal Partner</em><br>in Nigeria',
+    sub: 'Full-service commercial law across five distinct practice areas.'
+  },
+  {
+    h:   'Eleven Years<br>of <em>Distinguished</em><br>Service',
+    sub: 'Three cities. One unwavering commitment to excellence.'
+  }
+];
+let hIdx = 0;
+const hEl  = document.getElementById('heroHeadline');
+const hSub = document.getElementById('heroSub');
+
+function rotateHero() {
+  hEl.classList.add('slide-out');
+  setTimeout(() => {
+    hIdx = (hIdx + 1) % HERO_SLIDES.length;
+    hEl.innerHTML    = HERO_SLIDES[hIdx].h;
+    hSub.textContent = HERO_SLIDES[hIdx].sub;
+    hEl.classList.remove('slide-out');
+    hEl.classList.add('slide-in');
+    setTimeout(() => {
+      hEl.classList.remove('slide-in');
+      /* Neutralise original fadeUp animation so it doesn't re-fire between rotations */
+      hEl.style.opacity   = '1';
+      hEl.style.transform = 'none';
+      hEl.style.animation = 'none';
+    }, 560);
+  }, 480);
+}
+if (hEl) setInterval(rotateHero, 4500);
+
+/* ══════════════════════════════════════════════
+   PHOTO GALLERY — horizontal scroll prev/next
+══════════════════════════════════════════════ */
+(function () {
+  const strip   = document.getElementById('pgStrip');
+  const btnPrev = document.getElementById('pgPrev');
+  const btnNext = document.getElementById('pgNext');
+  if (!strip || !btnPrev || !btnNext) return;
+
+  let offset = 0;
+  const STEP = 376; /* item width (360) + gap (16) */
+
+  function clamp(v) {
+    const maxOffset = strip.scrollWidth - strip.parentElement.clientWidth;
+    return Math.max(0, Math.min(v, maxOffset));
+  }
+
+  function moveTo(v) {
+    offset = clamp(v);
+    strip.style.transform = `translateX(-${offset}px)`;
+  }
+
+  btnNext.addEventListener('click', () => moveTo(offset + STEP));
+  btnPrev.addEventListener('click', () => moveTo(offset - STEP));
+
+  /* Touch/drag support */
+  let dragStart = null;
+  const wrap = document.getElementById('pgWrap');
+  wrap.addEventListener('pointerdown', e => {
+    dragStart = { x: e.clientX, offset };
+    wrap.setPointerCapture(e.pointerId);
+  });
+  wrap.addEventListener('pointermove', e => {
+    if (!dragStart) return;
+    const dx = dragStart.x - e.clientX;
+    strip.style.transition = 'none';
+    strip.style.transform  = `translateX(-${clamp(dragStart.offset + dx)}px)`;
+  });
+  wrap.addEventListener('pointerup', e => {
+    if (!dragStart) return;
+    const dx = dragStart.x - e.clientX;
+    strip.style.transition = '';
+    moveTo(dragStart.offset + dx);
+    dragStart = null;
+  });
+})();
+
+/* ══════════════════════════════════════════════
+   FAQ ACCORDION
+══════════════════════════════════════════════ */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item     = btn.closest('.faq-item');
+    const isOpen   = item.classList.contains('open');
+    /* Close all */
+    document.querySelectorAll('.faq-item.open').forEach(el => {
+      el.classList.remove('open');
+      el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+    });
+    /* Open clicked (unless it was already open) */
+    if (!isOpen) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+/* ── Publications toggle ──────────────────────── */
+(function () {
+  const btn   = document.getElementById('newsToggle');
+  const extra = document.getElementById('newsExtra');
+  const label = document.getElementById('newsToggleLabel');
+  if (!btn || !extra) return;
+  btn.addEventListener('click', () => {
+    const open = extra.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    label.textContent = open ? 'Fewer Publications' : 'More Publications';
+  });
+})();
+
+/* ── Gallery toggle ───────────────────────────── */
+(function () {
+  const btn   = document.getElementById('nsibToggle');
+  const grid  = document.querySelector('.nsib-grid');
+  const label = document.getElementById('nsibToggleLabel');
+  if (!btn || !grid) return;
+  btn.addEventListener('click', () => {
+    const open = grid.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    label.textContent = open ? 'Show Fewer Photos' : 'Show More Photos';
+  });
+})();
+
+/* ── Newsletter form ──────────────────────────── */
+(function () {
+  const form = document.getElementById('nlform');
+  if (!form) return;
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const btn = form.querySelector('.nl-btn'), orig = btn.textContent;
+    btn.textContent = 'Subscribed ✓';
+    btn.style.cssText = 'background:var(--brand-green);border-color:var(--brand-green);cursor:default;pointer-events:none;';
+    setTimeout(() => { btn.textContent = orig; btn.style.cssText = ''; form.reset(); }, 3500);
+  });
+})();
 
 /* Lazy-init globe when contact section enters viewport */
 const globeObs = new IntersectionObserver(entries => {
