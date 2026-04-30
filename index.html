@@ -229,10 +229,12 @@
       font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 800;
       letter-spacing: .03em; text-transform: uppercase;
       background: var(--brand-green); color: var(--white) !important;
-      padding: 10px 24px; transition: background .3s !important;
+      padding: 11px 26px; border-radius: 1px;
+      box-shadow: 0 2px 12px rgba(76,166,76,.3);
+      transition: background .3s, box-shadow .3s !important;
     }
     .nav-links .nav-cta::after { display: none !important; }
-    .nav-links .nav-cta:hover { background: var(--brand-green-lt) !important; }
+    .nav-links .nav-cta:hover { background: var(--brand-green-lt) !important; box-shadow: 0 4px 18px rgba(76,166,76,.45) !important; }
 
     .nav-burger {
       display: none; flex-direction: column; gap: 6px;
@@ -246,15 +248,36 @@
     #mob-menu {
       display: none; position: fixed; inset: 0; background: var(--navy-dark);
       z-index: 998; flex-direction: column; align-items: center; justify-content: center;
-      gap: 40px; opacity: 0; transition: opacity .4s var(--ease);
+      gap: 4px; opacity: 0; transition: opacity .4s var(--ease);
+      padding: calc(var(--nav-h) + 24px) 40px 80px;
     }
     #mob-menu.open { display: flex; }
     #mob-menu.visible { opacity: 1; }
     #mob-menu a {
-      font-family: var(--serif); font-size: 2.4rem; font-weight: 300;
-      color: var(--white); letter-spacing: .04em; transition: color .3s;
+      font-family: var(--sans); font-size: .95rem; font-weight: 400;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.65); transition: color .3s;
+      padding: 11px 0; width: 100%; text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,.05);
     }
-    #mob-menu a:hover { color: var(--gold); }
+    #mob-menu a:first-child { border-top: 1px solid rgba(255,255,255,.05); }
+    #mob-menu a:hover { color: var(--white); }
+    /* Book Consultation — filled CTA in mobile menu */
+    #mob-menu .mob-cta {
+      margin-top: 28px; border: none;
+      background: var(--brand-green); color: var(--white) !important;
+      padding: 15px 36px; font-weight: 600; letter-spacing: .1em;
+      width: auto; display: inline-block;
+    }
+    #mob-menu .mob-cta:hover { background: var(--brand-green-lt) !important; color: var(--white) !important; }
+    /* Logo at bottom */
+    .mob-brand {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 10px;
+      opacity: .18; pointer-events: none; white-space: nowrap;
+    }
+    .mob-brand-icon { width: 26px; height: 26px; object-fit: contain; }
+    .mob-brand-wm   { height: 13px; width: auto; }
 
     /* ══════════════════════════════════════════
        HERO
@@ -1246,35 +1269,75 @@
       .nl-input { border-right: 1px solid var(--rule); border-bottom: none; }
       .nl-btn { border-top: none; }
     }
-    @media (max-width: 640px) {
-      :root { --nav-h: 64px; --sec-py: 80px; }
-      .W { padding: 0 22px; }
-      .nav-links, .nav-cta { display: none; }
+    /* ── Tablet (burger appears here) ─────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
       .nav-burger { display: flex; }
-      .hero-h1 { font-size: 3.2rem; }
-      .hero-btns { flex-direction: column; align-items: flex-start; }
+      .about-grid  { grid-template-columns: 1fr; gap: 48px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 56px; }
+      #contact .contact-grid > .sr.d2 { min-height: unset; }
+      .newsletter-wrap { margin-top: 32px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .tsg-names { grid-template-columns: 1fr; }
+      .news-hd { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+
+    /* ── Mobile ────────────────────────────────── */
+    @media (max-width: 640px) {
+      :root { --nav-h: 64px; --sec-py: 72px; }
+      .W { padding: 0 20px; }
+      .hero-h1 { font-size: clamp(2.4rem, 9vw, 3.2rem); }
+      .hero-btns { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .H2 { font-size: clamp(2rem, 7vw, 2.8rem); }
       .practice-grid { grid-template-columns: 1fr; }
       .pc--wide { grid-column: span 1; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
       .f-row { grid-template-columns: 1fr; }
-      .footer-top { grid-template-columns: 1fr; gap: 32px; }
-      .footer-bottom { flex-direction: column; text-align: center; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; text-align: center; gap: 10px; }
       .footer-disc { text-align: center; max-width: 100%; }
-      /* Gallery on mobile: shorter, fewer layers */
-      #gal-zone { height: 160vh; }
+      /* Parallax gallery: minimal on mobile */
+      #gal-zone { height: 150vh; }
       #gl3, #gl4, #gl5, #gl6 { display: none; }
       .gal-box { transform: none !important; }
       .gal-cue { display: none; }
+      /* Team */
       .tsg-photos { overflow-x: auto; padding-bottom: 8px; }
-      .tsg-col--b { margin-top: 32px; }
-      .tsp--a { width: 110px; height: 140px; }
-      .tsp--b { width: 122px; height: 155px; }
-      .tsp--c { width: 115px; height: 147px; }
-      .testi-right { padding-left: 0; border-left: none; border-top: 1px solid var(--rule); padding-top: 32px; }
+      .tsg-col--b { margin-top: 28px; }
+      .tsp--a { width: 100px; height: 128px; }
+      .tsp--b { width: 112px; height: 142px; }
+      .tsp--c { width: 106px; height: 135px; }
+      .tsg-names { grid-template-columns: 1fr; }
+      /* Testimonials */
+      .testi-right { padding-left: 0; border-left: none; border-top: 1px solid var(--rule); padding-top: 28px; }
       .testi-bgnum { display: none; }
+      /* News */
       .news-grid { grid-template-columns: 1fr; }
       .news-extra-grid { grid-template-columns: 1fr; }
-      .nsib-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+      /* Photo gallery */
+      .nsib-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 150px; }
       .nsib-item--wide { grid-column: span 2; }
+      .nsib-item--tall { grid-row: span 1; }
+      /* Newsletter form stacked */
+      .nl-form { flex-direction: column; }
+      .nl-input { border-right: 1px solid rgba(255,255,255,.15); border-bottom: none; }
+      .nl-btn { border-top: none; }
+      /* Awards */
+      .awards-inner { grid-template-columns: 1fr; gap: 40px; }
+      /* FAQ */
+      .faq-inner { grid-template-columns: 1fr; gap: 40px; }
+      /* Approach */
+      .approach-inner { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ── Very small screens (375px and below) ─── */
+    @media (max-width: 400px) {
+      .W { padding: 0 16px; }
+      .hero-h1 { font-size: 2.2rem; }
+      .nsib-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+      .nsib-item--wide { grid-column: span 1; }
+      .nsib-item--tall  { grid-row: span 1; }
+      .stats-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1316,7 +1379,13 @@
   <a href="#team"          onclick="closeMob()">People</a>
   <a href="#news"          onclick="closeMob()">Insights</a>
   <a href="#faq"           onclick="closeMob()">FAQ</a>
-  <a href="#contact"       onclick="closeMob()">Book Consultation</a>
+  <a href="#contact" class="mob-cta" onclick="closeMob()">Book Consultation</a>
+  <div class="mob-brand" aria-hidden="true">
+    <img src="https://starklegalng.com/wp-content/uploads/2025/05/starklegal-icon.png"
+         class="mob-brand-icon" alt="">
+    <img src="https://res.cloudinary.com/daglfnssf/image/upload/v1777450729/starklegal/brand/starklegal-wordmark.png"
+         class="mob-brand-wm" alt="Stark Legal">
+  </div>
 </div>
 
 <!-- ══ HERO ══════════════════════════════════ -->
