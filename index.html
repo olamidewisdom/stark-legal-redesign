@@ -3130,12 +3130,30 @@ document.querySelectorAll('.faq-q').forEach(btn => {
 (function () {
   const form = document.getElementById('nlform');
   if (!form) return;
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const btn = form.querySelector('.nl-btn'), orig = btn.textContent;
-    btn.textContent = 'Subscribed ✓';
-    btn.style.cssText = 'background:var(--brand-green);border-color:var(--brand-green);cursor:default;pointer-events:none;';
-    setTimeout(() => { btn.textContent = orig; btn.style.cssText = ''; form.reset(); }, 3500);
+    const email = document.getElementById('nlEmail').value.trim();
+    btn.textContent = 'Subscribing…';
+    btn.style.cssText = 'opacity:.65;cursor:default;pointer-events:none;';
+    try {
+      const res = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok) {
+        btn.textContent = 'Subscribed ✓';
+        btn.style.cssText = 'background:var(--brand-green);border-color:var(--brand-green);cursor:default;pointer-events:none;';
+        setTimeout(() => { btn.textContent = orig; btn.style.cssText = ''; form.reset(); }, 3500);
+      } else {
+        throw new Error('non-ok');
+      }
+    } catch {
+      btn.textContent = 'Failed — Try Again';
+      btn.style.cssText = 'background:#a33;border-color:#a33;color:#fff;cursor:default;pointer-events:none;';
+      setTimeout(() => { btn.textContent = orig; btn.style.cssText = ''; }, 3500);
+    }
   });
 })();
 
